@@ -1,2 +1,1 @@
-SolarSystem-2D
-==============
+Minimalistic 2D solar system simulation.
