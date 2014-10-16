@@ -24,13 +24,13 @@ function draw_body(id){
     canvas.fill();
 
     // draw orbit path and line to parent
-    if(settings[0]
-      || settings[1]){
+    if(settings['line-orbit']
+      || settings['line-parent']){
         canvas.strokeStyle = bodies[id][7];
         canvas.lineWidth = Math.ceil(bodies[id][2] / 10) / zoom;
 
         canvas.beginPath();
-        if(settings[0]){ // orbit path
+        if(settings['line-orbit']){
             canvas.arc(
               0,
               0,
@@ -40,7 +40,7 @@ function draw_body(id){
               1
             );
         }
-        if(settings[1]){ // line to parent
+        if(settings['line-parent']){
             canvas.moveTo(
               bodies[id][0],
               bodies[id][1]
@@ -88,13 +88,13 @@ function draw_body(id){
                 canvas.fill();
 
                 // draw orbit path and line to parent
-                if(settings[0]
-                  || settings[1]){
+                if(settings['line-orbit']
+                  || settings['line-parent']){
                     canvas.strokeStyle = bodies[id][8][moonloop_counter][7];
                     canvas.lineWidth = Math.ceil(bodies[id][8][moonloop_counter][2] / 10) / zoom;
 
                     canvas.beginPath();
-                    if(settings[0]){ // orbit path
+                    if(settings['line-orbit']){
                         canvas.arc(
                           bodies[id][0],
                           bodies[id][1],
@@ -104,7 +104,7 @@ function draw_body(id){
                           1
                         );
                     }
-                    if(settings[1]){ // line to parent
+                    if(settings['line-parent']){
                         canvas.moveTo(
                           bodies[id][0],
                           bodies[id][1]
@@ -302,10 +302,10 @@ var key_left = 0;
 var key_right = 0;
 var key_up = 0;
 var pi_times_two = Math.PI * 2;
-var settings = [
-  1,
-  1
-];
+var settings = {
+  'line-orbit' : true,
+  'line-parent': true,
+};
 var solar = [];
 var width = 0;
 var x = 0;
@@ -350,12 +350,10 @@ window.onkeydown = function(e){
         key_up = 1;
 
     }else if(key === 76){ // L
-        // lines to parent
-        settings[1] = !settings[1];
+        settings['line-parent'] = !settings['line-parent'];
 
     }else if(key === 79){ // O
-        // orbit paths
-        settings[0] = !settings[0];
+        settings['line-orbit'] = !settings['line-orbit'];
 
     }else if(key === 72){ // H
         generate_solarsystem();
