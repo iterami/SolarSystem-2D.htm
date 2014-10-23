@@ -1,5 +1,5 @@
 function draw_body(id){
-    // bodies orbit around parent
+    // Bodies orbit around their parent.
     bodies[id][6] += bodies[id][5];
     if(bodies[id][6] > 360){
         bodies[id][6] -= 360;
@@ -9,7 +9,7 @@ function draw_body(id){
     bodies[id][0] = bodies[id][4] * Math.cos(bodies[id][6]);
     bodies[id][1] = bodies[id][4] * Math.sin(bodies[id][6]);
 
-    // draw body
+    // Draw body.
     canvas.fillStyle = bodies[id][7];
     canvas.beginPath();
     canvas.arc(
@@ -23,7 +23,7 @@ function draw_body(id){
     canvas.closePath();
     canvas.fill();
 
-    // draw orbit path and line to parent
+    // Draw orbit path and line to parent, if player allows it.
     if(settings['line-orbit']
       || settings['line-parent']){
         canvas.strokeStyle = bodies[id][7];
@@ -54,75 +54,79 @@ function draw_body(id){
         canvas.stroke();
     }
 
-    // draw moons
-    if(bodies[id][8] != 0){
-        var moonloop_counter = bodies[id][8].length - 1;
-        if(moonloop_counter >= 0){
-            do{
-                bodies[id][8][moonloop_counter][6] += bodies[id][8][moonloop_counter][5];
-                if(bodies[id][8][moonloop_counter][6] > 360){
-                    bodies[id][8][moonloop_counter][6] -= 360;
-                }else if(bodies[id][8][moonloop_counter][6] < 0){
-                    bodies[id][8][moonloop_counter][6] += 360;
-                }
-                bodies[id][8][moonloop_counter][0] =
-                  bodies[id][8][moonloop_counter][4]
-                  * Math.cos(bodies[id][8][moonloop_counter][6])
-                  + bodies[id][0];
-                bodies[id][8][moonloop_counter][1] =
-                  bodies[id][8][moonloop_counter][4]
-                  * Math.sin(bodies[id][8][moonloop_counter][6])
-                  + bodies[id][1];
+    // If no moons, we're done here.
+    if(bodies[id][8] == 0){
+        return;
+    }
 
-                canvas.fillStyle = bodies[id][8][moonloop_counter][7];
+    // Draw moons.
+    var moonloop_counter = bodies[id][8].length - 1;
+    if(moonloop_counter >= 0){
+        do{
+            bodies[id][8][moonloop_counter][6] += bodies[id][8][moonloop_counter][5];
+            if(bodies[id][8][moonloop_counter][6] > 360){
+                bodies[id][8][moonloop_counter][6] -= 360;
+            }else if(bodies[id][8][moonloop_counter][6] < 0){
+                bodies[id][8][moonloop_counter][6] += 360;
+            }
+            bodies[id][8][moonloop_counter][0] =
+              bodies[id][8][moonloop_counter][4]
+              * Math.cos(bodies[id][8][moonloop_counter][6])
+              + bodies[id][0];
+            bodies[id][8][moonloop_counter][1] =
+              bodies[id][8][moonloop_counter][4]
+              * Math.sin(bodies[id][8][moonloop_counter][6])
+              + bodies[id][1];
+
+            canvas.fillStyle = bodies[id][8][moonloop_counter][7];
+            canvas.beginPath();
+            canvas.arc(
+              bodies[id][8][moonloop_counter][0],
+              bodies[id][8][moonloop_counter][1],
+              bodies[id][8][moonloop_counter][2],
+              0,
+              pi_times_two,
+              1
+            );
+            canvas.closePath();
+            canvas.fill();
+
+            // Draw orbit path and line to parent, if player allows it.
+            if(settings['line-orbit']
+              || settings['line-parent']){
+                canvas.strokeStyle = bodies[id][8][moonloop_counter][7];
+                canvas.lineWidth = Math.ceil(bodies[id][8][moonloop_counter][2] / 10) / zoom;
+
                 canvas.beginPath();
-                canvas.arc(
-                  bodies[id][8][moonloop_counter][0],
-                  bodies[id][8][moonloop_counter][1],
-                  bodies[id][8][moonloop_counter][2],
-                  0,
-                  pi_times_two,
-                  1
-                );
-                canvas.closePath();
-                canvas.fill();
-
-                // draw orbit path and line to parent
-                if(settings['line-orbit']
-                  || settings['line-parent']){
-                    canvas.strokeStyle = bodies[id][8][moonloop_counter][7];
-                    canvas.lineWidth = Math.ceil(bodies[id][8][moonloop_counter][2] / 10) / zoom;
-
-                    canvas.beginPath();
-                    if(settings['line-orbit']){
-                        canvas.arc(
-                          bodies[id][0],
-                          bodies[id][1],
-                          bodies[id][8][moonloop_counter][4],
-                          0,
-                          pi_times_two,
-                          1
-                        );
-                    }
-                    if(settings['line-parent']){
-                        canvas.moveTo(
-                          bodies[id][0],
-                          bodies[id][1]
-                        );
-                        canvas.lineTo(
-                          bodies[id][8][moonloop_counter][0],
-                          bodies[id][8][moonloop_counter][1]
-                        );
-                    }
-                    canvas.closePath();
-                    canvas.stroke();
+                if(settings['line-orbit']){
+                    canvas.arc(
+                      bodies[id][0],
+                      bodies[id][1],
+                      bodies[id][8][moonloop_counter][4],
+                      0,
+                      pi_times_two,
+                      1
+                    );
                 }
-            }while(moonloop_counter--);
-        }
+                if(settings['line-parent']){
+                    canvas.moveTo(
+                      bodies[id][0],
+                      bodies[id][1]
+                    );
+                    canvas.lineTo(
+                      bodies[id][8][moonloop_counter][0],
+                      bodies[id][8][moonloop_counter][1]
+                    );
+                }
+                canvas.closePath();
+                canvas.stroke();
+            }
+        }while(moonloop_counter--);
     }
 }
 
 function draw(){
+    // Update camera position.
     if(key_down){
         camera_y -= 10 / zoom;
     }
@@ -142,6 +146,8 @@ function draw(){
       width,
       height
     );
+
+    // Setup camera offset.
     canvas.translate(
       x,
       y
@@ -155,6 +161,7 @@ function draw(){
       camera_y
     );
 
+    // Draw bodies.
     var loop_counter = bodies.length - 1;
     if(loop_counter >= 0){
         do{
@@ -162,12 +169,13 @@ function draw(){
         }while(loop_counter--);
     }
 
-    canvas.fillStyle = solar[1];
+    // Draw the star.
+    canvas.fillStyle = settings['solar-color'];
     canvas.beginPath();
     canvas.arc(
       0,
       0,
-      solar[0],
+      settings['solar-radius'],
       0,
       pi_times_two,
       1
@@ -175,6 +183,7 @@ function draw(){
     canvas.closePath();
     canvas.fill();
 
+    // Revert camera offset.
     canvas.translate(
       -camera_x,
       -camera_y
@@ -188,6 +197,7 @@ function draw(){
       -y
     );
 
+    // Draw instructions.
     canvas.font = '23pt sans-serif';
     canvas.fillStyle = '#fff';
     canvas.fillText(
@@ -211,6 +221,7 @@ function generate_solarsystem(){
     do{
         radius = random_number(10) + 3;
 
+        // Create body.
         bodies.push([
           0,
           0,
@@ -223,16 +234,18 @@ function generate_solarsystem(){
             + (random_number(5) + 4)
             + (random_number(5) + 4)
             + (random_number(5) + 4),
-          0
+          0,
         ]);
 
-        // does body have moons?
+        // Should this new body have moons?
         if(Math.random() > .5){
             bodies[bodies.length - 1][8] = [];
 
             moonloop_counter = random_number(2) + 1;
             do{
                 radius = random_number(5) + 2;
+
+                // Create moon for this new body.
                 bodies[bodies.length - 1][8].push([
                   0,
                   0,
@@ -251,16 +264,11 @@ function generate_solarsystem(){
         }
     }while(bodyloop_counter--);
 
-    solar = [
-      // solar radius
-      random_number(99) + 5,
-
-      // solar color
-      '#'
+    settings['solar-color'] = '#'
         + (random_number(4) + 5)
         + (random_number(4) + 5)
-        + (random_number(4) + 5)
-    ];
+        + (random_number(4) + 5);
+    settings['solar-radius'] = random_number(99) + 5;
 }
 
 function mouse_wheel(e){
@@ -303,10 +311,11 @@ var key_right = 0;
 var key_up = 0;
 var pi_times_two = Math.PI * 2;
 var settings = {
-  'line-orbit' : true,
+  'line-orbit': true,
   'line-parent': true,
+  'solar-color': '#fff',
+  'solar-radius': 1,
 };
-var solar = [];
 var width = 0;
 var x = 0;
 var y = 0;
