@@ -147,6 +147,9 @@ function draw(){
       height
     );
 
+    // Save the current canvas state.
+    canvas.save();
+
     // Setup camera offset.
     canvas.translate(
       x,
@@ -183,19 +186,8 @@ function draw(){
     canvas.closePath();
     canvas.fill();
 
-    // Revert camera offset.
-    canvas.translate(
-      -camera_x,
-      -camera_y
-    );
-    canvas.scale(
-      1 / zoom,
-      1 / zoom
-    );
-    canvas.translate(
-      -x,
-      -y
-    );
+    // Restore the canvas state.
+    canvas.restore();
 
     // Draw instructions.
     canvas.font = '23pt sans-serif';
