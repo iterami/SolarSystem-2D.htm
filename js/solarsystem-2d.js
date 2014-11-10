@@ -297,10 +297,10 @@ var camera_x = 0;
 var camera_y = 0;
 var canvas = document.getElementById('canvas').getContext('2d');
 var height = 0;
-var key_down = 0;
-var key_left = 0;
-var key_right = 0;
-var key_up = 0;
+var key_down = false;
+var key_left = false;
+var key_right = false;
+var key_up = false;
 var pi_times_two = Math.PI * 2;
 var settings = {
   'line-orbit': true,
@@ -339,16 +339,16 @@ window.onkeydown = function(e){
     key = key.charCode ? key.charCode : key.keyCode;
 
     if(key === 65){ // A
-        key_left = 1;
+        key_left = true;
 
     }else if(key === 68){ // D
-        key_right = 1;
+        key_right = true;
 
     }else if(key === 83){ // S
-        key_down = 1;
+        key_down = true;
 
     }else if(key === 87){ // W
-        key_up = 1;
+        key_up = true;
 
     }else if(key === 76){ // L
         settings['line-parent'] = !settings['line-parent'];
@@ -366,15 +366,15 @@ window.onkeyup = function(e){
     key = key.charCode ? key.charCode : key.keyCode;
 
     if(key === 65){ // A
-        key_left = 0;
+        key_left = false;
 
     }else if(key === 68){ // D
-        key_right = 0;
+        key_right = false;
 
     }else if(key === 83){ // S
-        key_down = 0;
+        key_down = false;
 
     }else if(key === 87){ // W
-        key_up = 0;
+        key_up = false;
     }
 };
