@@ -263,30 +263,6 @@ function generate_solarsystem(){
     settings['solar-radius'] = random_number(99) + 5;
 }
 
-function init(){
-    window.onresize = resize;
-    resize();
-
-    generate_solarsystem();
-
-    if('onmousewheel' in window){
-        window.onmousewheel = mouse_wheel;
-
-    }else{
-        document.addEventListener(
-          'DOMMouseScroll',
-          mouse_wheel,
-          false
-        );
-    }
-
-    window.requestAnimationFrame(draw);
-    setInterval(
-      'logic()',
-      35
-    );
-}
-
 function logic(){
     // Update camera position.
     if(key_down){
@@ -399,4 +375,26 @@ window.onkeyup = function(e){
     }
 };
 
-window.onload = init;
+window.onload = function(){
+    window.onresize = resize;
+    resize();
+
+    generate_solarsystem();
+
+    if('onmousewheel' in window){
+        window.onmousewheel = mouse_wheel;
+
+    }else{
+        document.addEventListener(
+          'DOMMouseScroll',
+          mouse_wheel,
+          false
+        );
+    }
+
+    window.requestAnimationFrame(draw);
+    setInterval(
+      'logic()',
+      35
+    );
+};
