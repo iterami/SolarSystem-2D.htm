@@ -393,7 +393,7 @@ window.onload = function(){
     }
 
     window.requestAnimationFrame(draw);
-    setInterval(
+    window.setInterval(
       'logic()',
       35
     );
