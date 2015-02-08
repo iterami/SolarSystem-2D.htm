@@ -61,68 +61,66 @@ function draw_body(id){
 
     // Draw moons.
     var moonloop_counter = bodies[id][8].length - 1;
-    if(moonloop_counter >= 0){
-        do{
-            bodies[id][8][moonloop_counter][6] += bodies[id][8][moonloop_counter][5];
-            if(bodies[id][8][moonloop_counter][6] > 360){
-                bodies[id][8][moonloop_counter][6] -= 360;
-            }else if(bodies[id][8][moonloop_counter][6] < 0){
-                bodies[id][8][moonloop_counter][6] += 360;
-            }
-            bodies[id][8][moonloop_counter][0] =
-              bodies[id][8][moonloop_counter][4]
-              * Math.cos(bodies[id][8][moonloop_counter][6])
-              + bodies[id][0];
-            bodies[id][8][moonloop_counter][1] =
-              bodies[id][8][moonloop_counter][4]
-              * Math.sin(bodies[id][8][moonloop_counter][6])
-              + bodies[id][1];
+    do{
+        bodies[id][8][moonloop_counter][6] += bodies[id][8][moonloop_counter][5];
+        if(bodies[id][8][moonloop_counter][6] > 360){
+            bodies[id][8][moonloop_counter][6] -= 360;
+        }else if(bodies[id][8][moonloop_counter][6] < 0){
+            bodies[id][8][moonloop_counter][6] += 360;
+        }
+        bodies[id][8][moonloop_counter][0] =
+          bodies[id][8][moonloop_counter][4]
+          * Math.cos(bodies[id][8][moonloop_counter][6])
+          + bodies[id][0];
+        bodies[id][8][moonloop_counter][1] =
+          bodies[id][8][moonloop_counter][4]
+          * Math.sin(bodies[id][8][moonloop_counter][6])
+          + bodies[id][1];
 
-            buffer.fillStyle = bodies[id][8][moonloop_counter][7];
+        buffer.fillStyle = bodies[id][8][moonloop_counter][7];
+        buffer.beginPath();
+        buffer.arc(
+          bodies[id][8][moonloop_counter][0],
+          bodies[id][8][moonloop_counter][1],
+          bodies[id][8][moonloop_counter][2],
+          0,
+          pi_times_two,
+          1
+        );
+        buffer.closePath();
+        buffer.fill();
+
+        // Draw orbit path and line to parent, if player allows it.
+        if(settings['line-orbit']
+          || settings['line-parent']){
+            buffer.strokeStyle = bodies[id][8][moonloop_counter][7];
+            buffer.lineWidth = Math.ceil(bodies[id][8][moonloop_counter][2] / 10) / zoom;
+
             buffer.beginPath();
-            buffer.arc(
-              bodies[id][8][moonloop_counter][0],
-              bodies[id][8][moonloop_counter][1],
-              bodies[id][8][moonloop_counter][2],
-              0,
-              pi_times_two,
-              1
-            );
-            buffer.closePath();
-            buffer.fill();
-
-            // Draw orbit path and line to parent, if player allows it.
-            if(settings['line-orbit']
-              || settings['line-parent']){
-                buffer.strokeStyle = bodies[id][8][moonloop_counter][7];
-                buffer.lineWidth = Math.ceil(bodies[id][8][moonloop_counter][2] / 10) / zoom;
-
-                buffer.beginPath();
-                if(settings['line-orbit']){
-                    buffer.arc(
-                      bodies[id][0],
-                      bodies[id][1],
-                      bodies[id][8][moonloop_counter][4],
-                      0,
-                      pi_times_two,
-                      1
-                    );
-                }
-                if(settings['line-parent']){
-                    buffer.moveTo(
-                      bodies[id][0],
-                      bodies[id][1]
-                    );
-                    buffer.lineTo(
-                      bodies[id][8][moonloop_counter][0],
-                      bodies[id][8][moonloop_counter][1]
-                    );
-                }
-                buffer.closePath();
-                buffer.stroke();
+            if(settings['line-orbit']){
+                buffer.arc(
+                  bodies[id][0],
+                  bodies[id][1],
+                  bodies[id][8][moonloop_counter][4],
+                  0,
+                  pi_times_two,
+                  1
+                );
             }
-        }while(moonloop_counter--);
-    }
+            if(settings['line-parent']){
+                buffer.moveTo(
+                  bodies[id][0],
+                  bodies[id][1]
+                );
+                buffer.lineTo(
+                  bodies[id][8][moonloop_counter][0],
+                  bodies[id][8][moonloop_counter][1]
+                );
+            }
+            buffer.closePath();
+            buffer.stroke();
+        }
+    }while(moonloop_counter--);
 }
 
 function draw(){
