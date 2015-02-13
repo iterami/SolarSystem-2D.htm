@@ -177,7 +177,13 @@ function draw(){
     buffer.font = '23pt sans-serif';
     buffer.fillStyle = '#fff';
     buffer.fillText(
-      'H,L,MouseWheel,O,WASD',
+      settings['restart-key']
+        + ','
+        + settings['line-keys'][0]
+        + ',MouseWheel,'
+        + settings['line-keys'][1]
+        + ','
+        + settings['movement-keys'],
       0,
       23
     );
@@ -320,8 +326,11 @@ var key_right = false;
 var key_up = false;
 var pi_times_two = Math.PI * 2;
 var settings = {
+  'line-keys': 'LO',
   'line-orbit': true,
   'line-parent': true,
+  'movement-keys': 'WASD',
+  'restart-key': 'H',
   'solar-color': '#fff',
   'solar-radius': 1,
 };
@@ -331,44 +340,44 @@ var y = 0;
 var zoom = 1;
 
 window.onkeydown = function(e){
-    var key = e.keyCode || e.which;
+    var key = String.fromCharCode(e.keyCode || e.which);
 
-    if(key === 65){ // A
+    if(key === settings['movement-keys'][1]){
         key_left = true;
 
-    }else if(key === 68){ // D
+    }else if(key === settings['movement-keys'][3]){
         key_right = true;
 
-    }else if(key === 83){ // S
+    }else if(key === settings['movement-keys'][2]){
         key_down = true;
 
-    }else if(key === 87){ // W
+    }else if(key === settings['movement-keys'][0]){
         key_up = true;
 
-    }else if(key === 76){ // L
+    }else if(key === settings['line-keys'][0]){
         settings['line-parent'] = !settings['line-parent'];
 
-    }else if(key === 79){ // O
+    }else if(key === settings['line-keys'][1]){
         settings['line-orbit'] = !settings['line-orbit'];
 
-    }else if(key === 72){ // H
+    }else if(key === settings['restart-key']){
         generate_solarsystem();
     }
 };
 
 window.onkeyup = function(e){
-    var key = e.keyCode || e.which;
+    var key = String.fromCharCode(e.keyCode || e.which);
 
-    if(key === 65){ // A
+    if(key === settings['movement-keys'][1]){
         key_left = false;
 
-    }else if(key === 68){ // D
+    }else if(key === settings['movement-keys'][3]){
         key_right = false;
 
-    }else if(key === 83){ // S
+    }else if(key === settings['movement-keys'][2]){
         key_down = false;
 
-    }else if(key === 87){ // W
+    }else if(key === settings['movement-keys'][0]){
         key_up = false;
     }
 };
