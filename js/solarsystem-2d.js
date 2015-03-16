@@ -234,30 +234,32 @@ function generate_solarsystem(){
         ]);
 
         // Should this new body have moons?
-        if(Math.random() > .5){
-            bodies[bodies.length - 1][8] = [];
-
-            moonloop_counter = random_number(2) + 1;
-            do{
-                radius = random_number(5) + 2;
-
-                // Create moon for this new body.
-                bodies[bodies.length - 1][8].push([
-                  0,
-                  0,
-                  radius,
-                  radius,
-                  random_number(100) + 15,
-                  (Math.random() - .5) / 5,
-                  random_number(360),
-                  '#'
-                    + (random_number(5) + 4)
-                    + (random_number(5) + 4)
-                    + (random_number(5) + 4),
-                  bodies.length - 1
-                ]);
-            }while(moonloop_counter--);
+        if(Math.random() < .5){
+            continue;
         }
+
+        bodies[bodies.length - 1][8] = [];
+
+        moonloop_counter = random_number(2) + 1;
+        do{
+            radius = random_number(5) + 2;
+
+            // Create moon for this new body.
+            bodies[bodies.length - 1][8].push([
+              0,
+              0,
+              radius,
+              radius,
+              random_number(100) + 15,
+              (Math.random() - .5) / 5,
+              random_number(360),
+              '#'
+                + (random_number(5) + 4)
+                + (random_number(5) + 4)
+                + (random_number(5) + 4),
+              bodies.length - 1
+            ]);
+        }while(moonloop_counter--);
     }while(bodyloop_counter--);
 
     settings['solar-color'] = '#'
