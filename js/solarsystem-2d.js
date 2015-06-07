@@ -1,21 +1,29 @@
-function draw_body(id){
-    // Bodies orbit around their parent.
-    bodies[id][6] += bodies[id][5];
-    if(bodies[id][6] > 360){
-        bodies[id][6] -= 360;
-    }else if(bodies[id][6] < 0){
-        bodies[id][6] += 360;
+function draw_body(body){
+    // Calculate offset.
+    var offset_x = 0;
+    var offset_y = 0;
+    if(body['parent'] != null){
+        offset_x += bodies[body['parent']]['x'];
+        offset_y += bodies[body['parent']]['y'];
     }
-    bodies[id][0] = bodies[id][4] * Math.cos(bodies[id][6]);
-    bodies[id][1] = bodies[id][4] * Math.sin(bodies[id][6]);
+
+    // Bodies orbit around their parent.
+    body['rotation'] += body['speed'];
+    if(body['rotation'] > 360){
+        body['rotation'] -= 360;
+    }else if(body['rotation'] < 0){
+        body['rotation'] += 360;
+    }
+    body['x'] = body['orbit'] * Math.cos(body['rotation']) + offset_x;
+    body['y'] = body['orbit'] * Math.sin(body['rotation']) + offset_y;
 
     // Draw body.
-    buffer.fillStyle = bodies[id][7];
+    buffer.fillStyle = body['color'];
     buffer.beginPath();
     buffer.arc(
-      bodies[id][0],
-      bodies[id][1],
-      bodies[id][2],
+      body['x'],
+      body['y'],
+      body['radius'],
       0,
       pi_times_two,
       1
@@ -26,15 +34,15 @@ function draw_body(id){
     // Draw orbit path and line to parent, if player allows it.
     if(settings['line-orbit']
       || settings['line-parent']){
-        buffer.strokeStyle = bodies[id][7];
-        buffer.lineWidth = Math.ceil(bodies[id][2] / 10) / zoom;
+        buffer.strokeStyle = body['color'];
+        buffer.lineWidth = Math.ceil(body['radius'] / 10) / zoom;
 
         buffer.beginPath();
         if(settings['line-orbit']){
             buffer.arc(
-              0,
-              0,
-              bodies[id][4],
+              offset_x,
+              offset_y,
+              body['orbit'],
               0,
               pi_times_two,
               1
@@ -42,12 +50,12 @@ function draw_body(id){
         }
         if(settings['line-parent']){
             buffer.moveTo(
-              bodies[id][0],
-              bodies[id][1]
+              body['x'],
+              body['y']
             );
             buffer.lineTo(
-              0,
-              0
+              offset_x,
+              offset_y
             );
         }
         buffer.closePath();
@@ -55,71 +63,14 @@ function draw_body(id){
     }
 
     // If no moons, we're done here.
-    if(bodies[id][8] == 0){
+    if(body['moons'] == undefined){
         return;
     }
 
     // Draw moons.
-    var moonloop_counter = bodies[id][8].length - 1;
+    var moonloop_counter = body['moons'].length - 1;
     do{
-        bodies[id][8][moonloop_counter][6] += bodies[id][8][moonloop_counter][5];
-        if(bodies[id][8][moonloop_counter][6] > 360){
-            bodies[id][8][moonloop_counter][6] -= 360;
-        }else if(bodies[id][8][moonloop_counter][6] < 0){
-            bodies[id][8][moonloop_counter][6] += 360;
-        }
-        bodies[id][8][moonloop_counter][0] =
-          bodies[id][8][moonloop_counter][4]
-          * Math.cos(bodies[id][8][moonloop_counter][6])
-          + bodies[id][0];
-        bodies[id][8][moonloop_counter][1] =
-          bodies[id][8][moonloop_counter][4]
-          * Math.sin(bodies[id][8][moonloop_counter][6])
-          + bodies[id][1];
-
-        buffer.fillStyle = bodies[id][8][moonloop_counter][7];
-        buffer.beginPath();
-        buffer.arc(
-          bodies[id][8][moonloop_counter][0],
-          bodies[id][8][moonloop_counter][1],
-          bodies[id][8][moonloop_counter][2],
-          0,
-          pi_times_two,
-          1
-        );
-        buffer.closePath();
-        buffer.fill();
-
-        // Draw orbit path and line to parent, if player allows it.
-        if(settings['line-orbit']
-          || settings['line-parent']){
-            buffer.strokeStyle = bodies[id][8][moonloop_counter][7];
-            buffer.lineWidth = Math.ceil(bodies[id][8][moonloop_counter][2] / 10) / zoom;
-
-            buffer.beginPath();
-            if(settings['line-orbit']){
-                buffer.arc(
-                  bodies[id][0],
-                  bodies[id][1],
-                  bodies[id][8][moonloop_counter][4],
-                  0,
-                  pi_times_two,
-                  1
-                );
-            }
-            if(settings['line-parent']){
-                buffer.moveTo(
-                  bodies[id][0],
-                  bodies[id][1]
-                );
-                buffer.lineTo(
-                  bodies[id][8][moonloop_counter][0],
-                  bodies[id][8][moonloop_counter][1]
-                );
-            }
-            buffer.closePath();
-            buffer.stroke();
-        }
+        draw_body(body['moons'][moonloop_counter]);
     }while(moonloop_counter--);
 }
 
@@ -152,7 +103,7 @@ function draw(){
     var loop_counter = bodies.length - 1;
     if(loop_counter >= 0){
         do{
-            draw_body(loop_counter);
+            draw_body(bodies[loop_counter]);
         }while(loop_counter--);
     }
 
@@ -218,54 +169,51 @@ function generate_solarsystem(){
         radius = random_number(10) + 3;
 
         // Create body.
-        bodies.push([
-          0,
-          0,
-          radius,
-          radius,
-          random_number(2323) + 232,
-          Math.random() / 100,
-          random_number(360),
-          '#'
+        bodies.push({
+          'color': '#'
             + (random_number(5) + 4)
             + (random_number(5) + 4)
             + (random_number(5) + 4),
-          0,
-        ]);
+          'orbit': random_number(2323) + 232,
+          'radius': radius,
+          'rotation': random_number(360),
+          'speed': Math.random() / 100,
+          'x': 0,
+          'y': 0,
+        });
 
         // Should this new body have moons?
         if(Math.random() < .5){
             continue;
         }
 
-        bodies[bodies.length - 1][8] = [];
+        bodies[bodies.length - 1]['moons'] = [];
 
         moonloop_counter = random_number(2) + 1;
         do{
             radius = random_number(5) + 2;
 
             // Create moon for this new body.
-            bodies[bodies.length - 1][8].push([
-              0,
-              0,
-              radius,
-              radius,
-              random_number(100) + 15,
-              (Math.random() - .5) / 5,
-              random_number(360),
-              '#'
+            bodies[bodies.length - 1]['moons'].push({
+              'color': '#'
                 + (random_number(5) + 4)
                 + (random_number(5) + 4)
                 + (random_number(5) + 4),
-              bodies.length - 1
-            ]);
+              'orbit': random_number(100) + 15,
+              'parent': bodyloop_counter,
+              'radius': radius,
+              'rotation': random_number(360),
+              'speed': (Math.random() - .5) / 5,
+              'x': 0,
+              'y': 0,
+            });
         }while(moonloop_counter--);
     }while(bodyloop_counter--);
 
     settings['solar-color'] = '#'
-        + (random_number(4) + 5)
-        + (random_number(4) + 5)
-        + (random_number(4) + 5);
+      + (random_number(4) + 5)
+      + (random_number(4) + 5)
+      + (random_number(4) + 5);
     settings['solar-radius'] = random_number(99) + 5;
 }
 
