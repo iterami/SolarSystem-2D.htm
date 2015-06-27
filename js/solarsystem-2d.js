@@ -25,7 +25,7 @@ function draw_body(body){
       body['y'],
       body['radius'],
       0,
-      pi_times_two,
+      tau,
       1
     );
     buffer.closePath();
@@ -44,7 +44,7 @@ function draw_body(body){
               offset_y,
               body['orbit'],
               0,
-              pi_times_two,
+              tau,
               1
             );
         }
@@ -115,7 +115,7 @@ function draw(){
       0,
       settings['solar-radius'],
       0,
-      pi_times_two,
+      tau,
       1
     );
     buffer.closePath();
@@ -274,7 +274,6 @@ var key_down = false;
 var key_left = false;
 var key_right = false;
 var key_up = false;
-var pi_times_two = Math.PI * 2;
 var settings = {
   'line-keys': 'LO',
   'line-orbit': true,
@@ -284,6 +283,7 @@ var settings = {
   'solar-color': '#fff',
   'solar-radius': 1,
 };
+var tau = Math.PI * 2;
 var width = 0;
 var x = 0;
 var y = 0;
