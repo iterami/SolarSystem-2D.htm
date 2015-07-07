@@ -1,3 +1,5 @@
+'use strict';
+
 function draw_body(body){
     // Calculate offset.
     var offset_x = 0;
