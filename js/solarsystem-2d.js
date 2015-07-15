@@ -65,7 +65,7 @@ function draw_body(body){
     }
 
     // If no moons, we're done here.
-    if(body['moons'] == void(0)){
+    if(body['moons'] == void 0){
         return;
     }
 
