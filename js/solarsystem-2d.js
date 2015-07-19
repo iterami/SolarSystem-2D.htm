@@ -126,24 +126,13 @@ function draw(){
     // Restore the buffer state.
     buffer.restore();
 
-    // Draw instructions.
+    // Draw zoom.
     buffer.font = '23pt sans-serif';
     buffer.fillStyle = '#fff';
     buffer.fillText(
-      settings['restart-key']
-        + ','
-        + settings['line-keys'][0]
-        + ',MouseWheel,'
-        + settings['line-keys'][1]
-        + ','
-        + settings['movement-keys'],
-      0,
-      23
-    );
-    buffer.fillText(
       zoom,
       0,
-      50
+      25
     );
 
     canvas.clearRect(

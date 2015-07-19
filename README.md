@@ -11,3 +11,4 @@ Display Lines  | L
 Display Orbits | O
 Move Camera    | WASD
 Restart        | H
+Zoom           | Mouse Wheel
