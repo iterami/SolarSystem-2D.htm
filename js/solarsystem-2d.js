@@ -225,7 +225,7 @@ function logic(){
 }
 
 function mouse_wheel(e){
-    zoom += (e.wheelDelta || -e.detail > 0) > 0
+    zoom += (e.wheelDelta || -e.detail) > 0
       ? .05
       : -.05;
 
