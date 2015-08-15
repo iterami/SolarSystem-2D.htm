@@ -256,10 +256,14 @@ function resize(){
 }
 
 var bodies = [];
-var buffer = document.getElementById('buffer').getContext('2d');
+var buffer = document.getElementById('buffer').getContext('2d', {
+  'alpha': false,
+});
 var camera_x = 0;
 var camera_y = 0;
-var canvas = document.getElementById('canvas').getContext('2d');
+var canvas = document.getElementById('canvas').getContext('2d', {
+  'alpha': false,
+});
 var height = 0;
 var key_down = false;
 var key_left = false;
