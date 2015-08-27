@@ -127,7 +127,6 @@ function draw(){
     buffer.restore();
 
     // Draw zoom.
-    buffer.font = '23pt sans-serif';
     buffer.fillStyle = '#fff';
     buffer.fillText(
       zoom,
@@ -253,6 +252,8 @@ function resize(){
     document.getElementById('buffer').width = width;
     document.getElementById('canvas').width = width;
     x = width / 2;
+
+    buffer.font = '23pt sans-serif';
 }
 
 var bodies = [];
