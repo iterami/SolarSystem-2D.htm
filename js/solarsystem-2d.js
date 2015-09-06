@@ -210,16 +210,16 @@ function generate_solarsystem(){
 function logic(){
     // Update camera position.
     if(key_down){
-        camera_y -= 10 / zoom;
+        camera_y -= settings['camera-speed'] / zoom;
     }
     if(key_left){
-        camera_x += 10 / zoom;
+        camera_x += settings['camera-speed'] / zoom;
     }
     if(key_right){
-        camera_x -= 10 / zoom;
+        camera_x -= settings['camera-speed'] / zoom;
     }
     if(key_up){
-        camera_y += 10 / zoom;
+        camera_y += settings['camera-speed'] / zoom;
     }
 }
 
@@ -265,12 +265,16 @@ var camera_y = 0;
 var canvas = document.getElementById('canvas').getContext('2d', {
   'alpha': false,
 });
+var drag = false;
+var drag_x = 0;
+var drag_y = 0;
 var height = 0;
 var key_down = false;
 var key_left = false;
 var key_right = false;
 var key_up = false;
 var settings = {
+  'camera-speed': 10,
   'line-keys': 'LO',
   'line-orbit': true,
   'line-parent': true,
@@ -329,7 +333,6 @@ window.onkeyup = function(e){
 };
 
 window.onload = function(){
-    window.onresize = resize;
     resize();
 
     generate_solarsystem();
@@ -351,3 +354,29 @@ window.onload = function(){
       35
     );
 };
+
+window.onmousedown =
+  window.ontouchstart = function(e){
+    drag = true;
+    drag_x = e.pageX;
+    drag_y = e.pageY;
+};
+
+window.onmousemove =
+  window.ontouchmove = function(e){
+    if(!drag){
+        return;
+    }
+
+    camera_x -= (drag_x - e.pageX) / zoom;
+    camera_y -= (drag_y - e.pageY) / zoom;
+    drag_x = e.pageX;
+    drag_y = e.pageY;
+};
+
+window.onmouseup =
+  window.ontouchend = function(e){
+    drag = false;
+};
+
+window.onresize = resize;
