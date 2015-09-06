@@ -4,7 +4,7 @@ function draw_body(body){
     // Calculate offset.
     var offset_x = 0;
     var offset_y = 0;
-    if(body['parent'] != null){
+    if(body['parent'] !== void 0){
         offset_x += bodies[body['parent']]['x'];
         offset_y += bodies[body['parent']]['y'];
     }
