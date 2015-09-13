@@ -334,7 +334,6 @@ window.onkeyup = function(e){
 
 window.onload = function(){
     resize();
-
     generate_solarsystem();
 
     if('onmousewheel' in window){
