@@ -12,3 +12,8 @@ Display Orbits | O
 Move Camera    | WASD, Mouse Drag
 Restart        | H
 Zoom           | Mouse Wheel
+
+---
+
+Requires:
+* [iterami/common](https://github.com/iterami/common)
