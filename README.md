@@ -1,5 +1,5 @@
-SolarSystem-2D.htm
-------------------
+iterami/SolarSystem-2D.htm
+--------------------------
 
 A minimalistic 2D solar system simulation.
 
