@@ -76,14 +76,7 @@ function draw_body(body){
     }while(moonloop_counter--);
 }
 
-function draw(){
-    buffer.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-
+function draw_logic(){
     // Save the current buffer state.
     buffer.save();
 
@@ -133,20 +126,6 @@ function draw(){
       0,
       25
     );
-
-    canvas.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-    canvas.drawImage(
-      document.getElementById('buffer'),
-      0,
-      0
-    );
-
-    window.requestAnimationFrame(draw);
 }
 
 function generate_solarsystem(){
@@ -242,33 +221,16 @@ function random_number(i){
     return Math.floor(Math.random() * i);
 }
 
-function resize(){
-    height = window.innerHeight;
-    document.getElementById('buffer').height = height;
-    document.getElementById('canvas').height = height;
-    y = height / 2;
-
-    width = window.innerWidth;
-    document.getElementById('buffer').width = width;
-    document.getElementById('canvas').width = width;
-    x = width / 2;
-
+function resize_logic(){
     buffer.font = '23pt sans-serif';
 }
 
 var bodies = [];
-var buffer = document.getElementById('buffer').getContext('2d', {
-  'alpha': false,
-});
 var camera_x = 0;
 var camera_y = 0;
-var canvas = document.getElementById('canvas').getContext('2d', {
-  'alpha': false,
-});
 var drag = false;
 var drag_x = 0;
 var drag_y = 0;
-var height = 0;
 var key_down = false;
 var key_left = false;
 var key_right = false;
@@ -284,9 +246,6 @@ var settings = {
   'solar-radius': 1,
 };
 var tau = Math.PI * 2;
-var width = 0;
-var x = 0;
-var y = 0;
 var zoom = 1;
 
 window.onkeydown = function(e){
@@ -333,7 +292,7 @@ window.onkeyup = function(e){
 };
 
 window.onload = function(){
-    resize();
+    init_canvas();
     generate_solarsystem();
 
     if('onmousewheel' in window){
@@ -346,12 +305,6 @@ window.onload = function(){
           false
         );
     }
-
-    window.requestAnimationFrame(draw);
-    window.setInterval(
-      logic,
-      35
-    );
 };
 
 window.onmousedown =
