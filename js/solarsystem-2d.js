@@ -330,5 +330,3 @@ window.onmouseup =
   window.ontouchend = function(e){
     drag = false;
 };
-
-window.onresize = resize;
