@@ -235,16 +235,6 @@ var key_down = false;
 var key_left = false;
 var key_right = false;
 var key_up = false;
-var settings = {
-  'camera-speed': 10,
-  'line-keys': 'LO',
-  'line-orbit': true,
-  'line-parent': true,
-  'movement-keys': 'WASD',
-  'restart-key': 'H',
-  'solar-color': '#fff',
-  'solar-radius': 1,
-};
 var tau = Math.PI * 2;
 var zoom = 1;
 
@@ -293,6 +283,19 @@ window.onkeyup = function(e){
 
 window.onload = function(){
     init_canvas();
+    init_settings(
+      'SolarSystem-2D.htm-',
+      {
+        'camera-speed': 10,
+        'line-keys': 'LO',
+        'line-orbit': true,
+        'line-parent': true,
+        'movement-keys': 'WASD',
+        'restart-key': 'H',
+        'solar-color': '#fff',
+        'solar-radius': 1,
+      }
+    );
     generate_solarsystem();
 
     if('onmousewheel' in window){
