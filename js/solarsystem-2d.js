@@ -221,10 +221,6 @@ function random_number(i){
     return Math.floor(Math.random() * i);
 }
 
-function resize_logic(){
-    buffer.font = font;
-}
-
 var bodies = [];
 var camera_x = 0;
 var camera_y = 0;
