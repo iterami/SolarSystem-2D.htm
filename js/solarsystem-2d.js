@@ -34,13 +34,13 @@ function draw_body(body){
     buffer.fill();
 
     // Draw orbit path and line to parent, if player allows it.
-    if(settings['line-orbit']
-      || settings['line-parent']){
+    if(settings_settings['line-orbit']
+      || settings_settings['line-parent']){
         buffer.strokeStyle = body['color'];
         buffer.lineWidth = Math.ceil(body['radius'] / 10) / zoom;
 
         buffer.beginPath();
-        if(settings['line-orbit']){
+        if(settings_settings['line-orbit']){
             buffer.arc(
               offset_x,
               offset_y,
@@ -50,7 +50,7 @@ function draw_body(body){
               1
             );
         }
-        if(settings['line-parent']){
+        if(settings_settings['line-parent']){
             buffer.moveTo(
               body['x'],
               body['y']
@@ -103,12 +103,12 @@ function draw_logic(){
     }
 
     // Draw the star.
-    buffer.fillStyle = settings['solar-color'];
+    buffer.fillStyle = settings_settings['solar-color'];
     buffer.beginPath();
     buffer.arc(
       0,
       0,
-      settings['solar-radius'],
+      settings_settings['solar-radius'],
       0,
       tau,
       1
@@ -179,26 +179,26 @@ function generate_solarsystem(){
         }while(moonloop_counter--);
     }while(bodyloop_counter--);
 
-    settings['solar-color'] = '#'
+    settings_settings['solar-color'] = '#'
       + (random_number(4) + 5)
       + (random_number(4) + 5)
       + (random_number(4) + 5);
-    settings['solar-radius'] = random_number(99) + 5;
+    settings_settings['solar-radius'] = random_number(99) + 5;
 }
 
 function logic(){
     // Update camera position.
     if(key_down){
-        camera_y -= settings['camera-speed'] / zoom;
+        camera_y -= settings_settings['camera-speed'] / zoom;
     }
     if(key_left){
-        camera_x += settings['camera-speed'] / zoom;
+        camera_x += settings_settings['camera-speed'] / zoom;
     }
     if(key_right){
-        camera_x -= settings['camera-speed'] / zoom;
+        camera_x -= settings_settings['camera-speed'] / zoom;
     }
     if(key_up){
-        camera_y += settings['camera-speed'] / zoom;
+        camera_y += settings_settings['camera-speed'] / zoom;
     }
 }
 
@@ -237,25 +237,25 @@ var zoom = 1;
 window.onkeydown = function(e){
     var key = String.fromCharCode(e.keyCode || e.which);
 
-    if(key === settings['movement-keys'][1]){
+    if(key === settings_settings['movement-keys'][1]){
         key_left = true;
 
-    }else if(key === settings['movement-keys'][3]){
+    }else if(key === settings_settings['movement-keys'][3]){
         key_right = true;
 
-    }else if(key === settings['movement-keys'][2]){
+    }else if(key === settings_settings['movement-keys'][2]){
         key_down = true;
 
-    }else if(key === settings['movement-keys'][0]){
+    }else if(key === settings_settings['movement-keys'][0]){
         key_up = true;
 
-    }else if(key === settings['line-keys'][0]){
-        settings['line-parent'] = !settings['line-parent'];
+    }else if(key === settings_settings['line-keys'][0]){
+        settings_settings['line-parent'] = !settings_settings['line-parent'];
 
-    }else if(key === settings['line-keys'][1]){
-        settings['line-orbit'] = !settings['line-orbit'];
+    }else if(key === settings_settings['line-keys'][1]){
+        settings_settings['line-orbit'] = !settings_settings['line-orbit'];
 
-    }else if(key === settings['restart-key']){
+    }else if(key === settings_settings['restart-key']){
         generate_solarsystem();
     }
 };
@@ -263,23 +263,23 @@ window.onkeydown = function(e){
 window.onkeyup = function(e){
     var key = String.fromCharCode(e.keyCode || e.which);
 
-    if(key === settings['movement-keys'][1]){
+    if(key === settings_settings['movement-keys'][1]){
         key_left = false;
 
-    }else if(key === settings['movement-keys'][3]){
+    }else if(key === settings_settings['movement-keys'][3]){
         key_right = false;
 
-    }else if(key === settings['movement-keys'][2]){
+    }else if(key === settings_settings['movement-keys'][2]){
         key_down = false;
 
-    }else if(key === settings['movement-keys'][0]){
+    }else if(key === settings_settings['movement-keys'][0]){
         key_up = false;
     }
 };
 
 window.onload = function(){
     init_canvas();
-    init_settings(
+    settings_init(
       'SolarSystem-2D.htm-',
       {
         'camera-speed': 10,
