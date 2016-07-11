@@ -20,9 +20,9 @@ function draw_body(body){
     body['y'] = body['orbit'] * Math.sin(body['rotation']) + offset_y;
 
     // Draw body.
-    buffer.fillStyle = body['color'];
-    buffer.beginPath();
-    buffer.arc(
+    canvas_buffer.fillStyle = body['color'];
+    canvas_buffer.beginPath();
+    canvas_buffer.arc(
       body['x'],
       body['y'],
       body['radius'],
@@ -30,18 +30,18 @@ function draw_body(body){
       tau,
       1
     );
-    buffer.closePath();
-    buffer.fill();
+    canvas_buffer.closePath();
+    canvas_buffer.fill();
 
     // Draw orbit path and line to parent, if player allows it.
     if(settings_settings['line-orbit']
       || settings_settings['line-parent']){
-        buffer.strokeStyle = body['color'];
-        buffer.lineWidth = Math.ceil(body['radius'] / 10) / zoom;
+        canvas_buffer.strokeStyle = body['color'];
+        canvas_buffer.lineWidth = Math.ceil(body['radius'] / 10) / zoom;
 
-        buffer.beginPath();
+        canvas_buffer.beginPath();
         if(settings_settings['line-orbit']){
-            buffer.arc(
+            canvas_buffer.arc(
               offset_x,
               offset_y,
               body['orbit'],
@@ -51,17 +51,17 @@ function draw_body(body){
             );
         }
         if(settings_settings['line-parent']){
-            buffer.moveTo(
+            canvas_buffer.moveTo(
               body['x'],
               body['y']
             );
-            buffer.lineTo(
+            canvas_buffer.lineTo(
               offset_x,
               offset_y
             );
         }
-        buffer.closePath();
-        buffer.stroke();
+        canvas_buffer.closePath();
+        canvas_buffer.stroke();
     }
 
     // If no moons, we're done here.
@@ -78,18 +78,18 @@ function draw_body(body){
 
 function draw_logic(){
     // Save the current buffer state.
-    buffer.save();
+    canvas_buffer.save();
 
     // Setup camera offset.
-    buffer.translate(
-      x,
-      y
+    canvas_buffer.translate(
+      canvas_x,
+      canvas_y
     );
-    buffer.scale(
+    canvas_buffer.scale(
       zoom,
       zoom
     );
-    buffer.translate(
+    canvas_buffer.translate(
       camera_x,
       camera_y
     );
@@ -103,9 +103,9 @@ function draw_logic(){
     }
 
     // Draw the star.
-    buffer.fillStyle = settings_settings['solar-color'];
-    buffer.beginPath();
-    buffer.arc(
+    canvas_buffer.fillStyle = settings_settings['solar-color'];
+    canvas_buffer.beginPath();
+    canvas_buffer.arc(
       0,
       0,
       settings_settings['solar-radius'],
@@ -113,15 +113,15 @@ function draw_logic(){
       tau,
       1
     );
-    buffer.closePath();
-    buffer.fill();
+    canvas_buffer.closePath();
+    canvas_buffer.fill();
 
     // Restore the buffer state.
-    buffer.restore();
+    canvas_buffer.restore();
 
     // Draw zoom.
-    buffer.fillStyle = '#fff';
-    buffer.fillText(
+    canvas_buffer.fillStyle = '#fff';
+    canvas_buffer.fillText(
       zoom,
       0,
       25
@@ -278,7 +278,7 @@ window.onkeyup = function(e){
 };
 
 window.onload = function(){
-    init_canvas();
+    canvas_init();
     settings_init(
       'SolarSystem-2D.htm-',
       {
