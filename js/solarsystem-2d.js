@@ -131,21 +131,21 @@ function draw_logic(){
 function generate_solarsystem(){
     bodies.length = 0;
 
-    var bodyloop_counter = random_number(5) + 1;
+    var bodyloop_counter = random_integer(5) + 1;
     var moonloop_counter = 0;
     var radius = 0;
     do{
-        radius = random_number(10) + 3;
+        radius = random_integer(10) + 3;
 
         // Create body.
         bodies.push({
           'color': '#'
-            + (random_number(5) + 4)
-            + (random_number(5) + 4)
-            + (random_number(5) + 4),
-          'orbit': random_number(2323) + 232,
+            + (random_integer(5) + 4)
+            + (random_integer(5) + 4)
+            + (random_integer(5) + 4),
+          'orbit': random_integer(2323) + 232,
           'radius': radius,
-          'rotation': random_number(360),
+          'rotation': random_integer(360),
           'speed': Math.random() / 100,
           'x': 0,
           'y': 0,
@@ -158,20 +158,20 @@ function generate_solarsystem(){
 
         bodies[bodies.length - 1]['moons'] = [];
 
-        moonloop_counter = random_number(2) + 1;
+        moonloop_counter = random_integer(2) + 1;
         do{
-            radius = random_number(5) + 2;
+            radius = random_integer(5) + 2;
 
             // Create moon for this new body.
             bodies[bodies.length - 1]['moons'].push({
               'color': '#'
-                + (random_number(5) + 4)
-                + (random_number(5) + 4)
-                + (random_number(5) + 4),
-              'orbit': random_number(100) + 15,
+                + (random_integer(5) + 4)
+                + (random_integer(5) + 4)
+                + (random_integer(5) + 4),
+              'orbit': random_integer(100) + 15,
               'parent': bodyloop_counter,
               'radius': radius,
-              'rotation': random_number(360),
+              'rotation': random_integer(360),
               'speed': (Math.random() - .5) / 5,
               'x': 0,
               'y': 0,
@@ -180,10 +180,10 @@ function generate_solarsystem(){
     }while(bodyloop_counter--);
 
     settings_settings['solar-color'] = '#'
-      + (random_number(4) + 5)
-      + (random_number(4) + 5)
-      + (random_number(4) + 5);
-    settings_settings['solar-radius'] = random_number(99) + 5;
+      + (random_integer(4) + 5)
+      + (random_integer(4) + 5)
+      + (random_integer(4) + 5);
+    settings_settings['solar-radius'] = random_integer(99) + 5;
 }
 
 function logic(){
@@ -215,10 +215,6 @@ function mouse_wheel(e){
     }
 
     zoom = parseFloat(zoom.toFixed(2));
-}
-
-function random_number(i){
-    return Math.floor(Math.random() * i);
 }
 
 var bodies = [];
