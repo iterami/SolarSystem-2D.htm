@@ -27,7 +27,7 @@ function draw_body(body){
       body['y'],
       body['radius'],
       0,
-      tau,
+      math_tau,
       1
     );
     canvas_buffer.closePath();
@@ -46,7 +46,7 @@ function draw_body(body){
               offset_y,
               body['orbit'],
               0,
-              tau,
+              math_tau,
               1
             );
         }
@@ -110,7 +110,7 @@ function draw_logic(){
       0,
       settings_settings['solar-radius'],
       0,
-      tau,
+      math_tau,
       1
     );
     canvas_buffer.closePath();
