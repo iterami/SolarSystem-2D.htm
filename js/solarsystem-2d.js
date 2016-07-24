@@ -227,7 +227,6 @@ var key_down = false;
 var key_left = false;
 var key_right = false;
 var key_up = false;
-var tau = Math.PI * 2;
 var zoom = 1;
 
 window.onkeydown = function(e){
