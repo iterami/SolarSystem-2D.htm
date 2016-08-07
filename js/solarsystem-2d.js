@@ -152,7 +152,7 @@ function generate_solarsystem(){
         });
 
         // Should this new body have moons?
-        if(Math.random() < .5){
+        if(random_boolean()){
             continue;
         }
 
