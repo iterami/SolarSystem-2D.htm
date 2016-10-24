@@ -20,48 +20,56 @@ function draw_body(body){
     body['y'] = body['orbit'] * Math.sin(body['rotation']) + offset_y;
 
     // Draw body.
-    canvas_buffer.fillStyle = body['color'];
-    canvas_buffer.beginPath();
-    canvas_buffer.arc(
-      body['x'],
-      body['y'],
-      body['radius'],
-      0,
-      math_tau,
-      1
+    canvas_draw_path(
+      [
+        {
+          'endAngle': math_tau,
+          'radius': body['radius'],
+          'startAngle': 0,
+          'type': 'arc',
+          'x': body['x'],
+          'y': body['y'],
+        },
+      ],
+      {
+        'fillStyle': body['color'],
+      }
     );
-    canvas_buffer.closePath();
-    canvas_buffer.fill();
 
     // Draw orbit path and line to parent, if player allows it.
     if(settings_settings['line-orbit']
       || settings_settings['line-parent']){
-        canvas_buffer.strokeStyle = body['color'];
-        canvas_buffer.lineWidth = Math.ceil(body['radius'] / 10) / zoom;
-
-        canvas_buffer.beginPath();
+        var vertices = [];
         if(settings_settings['line-orbit']){
-            canvas_buffer.arc(
-              offset_x,
-              offset_y,
-              body['orbit'],
-              0,
-              math_tau,
-              1
-            );
+            vertices.push({
+              'endAngle': math_tau,
+              'radius': body['orbit'],
+              'startAngle': 0,
+              'type': 'arc',
+              'x': offset_x,
+              'y': offset_y,
+            });
         }
         if(settings_settings['line-parent']){
-            canvas_buffer.moveTo(
-              body['x'],
-              body['y']
-            );
-            canvas_buffer.lineTo(
-              offset_x,
-              offset_y
-            );
+            vertices.push({
+              'type': 'moveTo',
+              'x': body['x'],
+              'y': body['y'],
+            });
+            vertices.push({
+              'x': offset_x,
+              'y': offset_y,
+            });
         }
-        canvas_buffer.closePath();
-        canvas_buffer.stroke();
+
+        canvas_draw_path(
+          vertices,
+          {
+            'strokeStyle': body['color'],
+            'lineWidth': Math.ceil(body['radius'] / 10) / zoom,
+          },
+          'stroke'
+        );
     }
 
     // If no moons, we're done here.
@@ -103,18 +111,21 @@ function draw_logic(){
     }
 
     // Draw the star.
-    canvas_buffer.fillStyle = settings_settings['solar-color'];
-    canvas_buffer.beginPath();
-    canvas_buffer.arc(
-      0,
-      0,
-      settings_settings['solar-radius'],
-      0,
-      math_tau,
-      1
+    canvas_draw_path(
+      [
+        {
+          'endAngle': math_tau,
+          'radius': settings_settings['solar-radius'],
+          'startAngle': 0,
+          'type': 'arc',
+          'x': 0,
+          'y': 0,
+        },
+      ],
+      {
+        'fillStyle': settings_settings['solar-color'],
+      }
     );
-    canvas_buffer.closePath();
-    canvas_buffer.fill();
 
     // Restore the buffer state.
     canvas_buffer.restore();
