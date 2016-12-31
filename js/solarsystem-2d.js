@@ -285,9 +285,9 @@ window.onkeyup = function(e){
 
 window.onload = function(){
     canvas_init();
-    settings_init(
-      'SolarSystem-2D.htm-',
-      {
+    settings_init({
+      'prefix': 'SolarSystem-2D.htm-',
+      'settings': {
         'camera-speed': 10,
         'line-keys': 'LO',
         'line-orbit': true,
@@ -296,8 +296,8 @@ window.onload = function(){
         'restart-key': 'H',
         'solar-color': '#fff',
         'solar-radius': 1,
-      }
-    );
+      },
+    });
     generate_solarsystem();
 
     if('onmousewheel' in window){
