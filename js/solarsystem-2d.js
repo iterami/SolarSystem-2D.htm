@@ -142,21 +142,26 @@ function draw_logic(){
 function generate_solarsystem(){
     bodies.length = 0;
 
-    var bodyloop_counter = random_integer(5) + 1;
+    var bodyloop_counter = random_integer({
+      'max': 5,
+    }) + 1;
     var moonloop_counter = 0;
     var radius = 0;
     do{
-        radius = random_integer(10) + 3;
+        radius = random_integer({
+          'max': 10,
+        }) + 3;
 
         // Create body.
         bodies.push({
-          'color': '#'
-            + (random_integer(5) + 4)
-            + (random_integer(5) + 4)
-            + (random_integer(5) + 4),
-          'orbit': random_integer(2323) + 232,
+          'color': random_hex(),
+          'orbit': random_integer({
+            'max': 2323,
+          }) + 232,
           'radius': radius,
-          'rotation': random_integer(360),
+          'rotation': random_integer({
+            'max': 360,
+          }),
           'speed': Math.random() / 100,
           'x': 0,
           'y': 0,
@@ -169,20 +174,25 @@ function generate_solarsystem(){
 
         bodies[bodies.length - 1]['moons'] = [];
 
-        moonloop_counter = random_integer(2) + 1;
+        moonloop_counter = random_integer({
+          'max': 2,
+        }) + 1;
         do{
-            radius = random_integer(5) + 2;
+            radius = random_integer({
+              'max': 5,
+            }) + 2;
 
             // Create moon for this new body.
             bodies[bodies.length - 1]['moons'].push({
-              'color': '#'
-                + (random_integer(5) + 4)
-                + (random_integer(5) + 4)
-                + (random_integer(5) + 4),
-              'orbit': random_integer(100) + 15,
+              'color': random_hex(),
+              'orbit': random_integer({
+                'max': 100,
+              }) + 15,
               'parent': bodyloop_counter,
               'radius': radius,
-              'rotation': random_integer(360),
+              'rotation': random_integer({
+                'max': 360,
+              }),
               'speed': (Math.random() - .5) / 5,
               'x': 0,
               'y': 0,
@@ -190,11 +200,10 @@ function generate_solarsystem(){
         }while(moonloop_counter--);
     }while(bodyloop_counter--);
 
-    settings_settings['solar-color'] = '#'
-      + (random_integer(4) + 5)
-      + (random_integer(4) + 5)
-      + (random_integer(4) + 5);
-    settings_settings['solar-radius'] = random_integer(99) + 5;
+    settings_settings['solar-color'] = random_hex();
+    settings_settings['solar-radius'] = random_integer({
+      'max': 99,
+    }) + 5;
 }
 
 function logic(){
