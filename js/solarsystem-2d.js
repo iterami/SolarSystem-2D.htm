@@ -20,8 +20,11 @@ function draw_body(body){
     body['y'] = body['orbit'] * Math.sin(body['rotation']) + offset_y;
 
     // Draw body.
-    canvas_draw_path(
-      [
+    canvas_draw_path({
+      'properties': {
+        'fillStyle': body['color'],
+      },
+      'vertices': [
         {
           'endAngle': math_tau,
           'radius': body['radius'],
@@ -31,10 +34,7 @@ function draw_body(body){
           'y': body['y'],
         },
       ],
-      {
-        'fillStyle': body['color'],
-      }
-    );
+    });
 
     // Draw orbit path and line to parent, if player allows it.
     if(settings_settings['line-orbit']
@@ -62,14 +62,14 @@ function draw_body(body){
             });
         }
 
-        canvas_draw_path(
-          vertices,
-          {
+        canvas_draw_path({
+          'properties': {
             'strokeStyle': body['color'],
             'lineWidth': Math.ceil(body['radius'] / 10) / zoom,
           },
-          'stroke'
-        );
+          'style': 'stroke',
+          'vertices': vertices,
+        });
     }
 
     // If no moons, we're done here.
@@ -111,8 +111,11 @@ function draw_logic(){
     }
 
     // Draw the star.
-    canvas_draw_path(
-      [
+    canvas_draw_path({
+      'properties': {
+        'fillStyle': settings_settings['solar-color'],
+      },
+      'vertices': [
         {
           'endAngle': math_tau,
           'radius': settings_settings['solar-radius'],
@@ -122,10 +125,7 @@ function draw_logic(){
           'y': 0,
         },
       ],
-      {
-        'fillStyle': settings_settings['solar-color'],
-      }
-    );
+    });
 
     // Restore the buffer state.
     canvas_buffer.restore();
