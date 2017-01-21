@@ -249,49 +249,6 @@ var key_right = false;
 var key_up = false;
 var zoom = 1;
 
-window.onkeydown = function(e){
-    var key = String.fromCharCode(e.keyCode || e.which);
-
-    if(key === settings_settings['movement-keys'][1]){
-        key_left = true;
-
-    }else if(key === settings_settings['movement-keys'][3]){
-        key_right = true;
-
-    }else if(key === settings_settings['movement-keys'][2]){
-        key_down = true;
-
-    }else if(key === settings_settings['movement-keys'][0]){
-        key_up = true;
-
-    }else if(key === settings_settings['line-keys'][0]){
-        settings_settings['line-parent'] = !settings_settings['line-parent'];
-
-    }else if(key === settings_settings['line-keys'][1]){
-        settings_settings['line-orbit'] = !settings_settings['line-orbit'];
-
-    }else if(key === settings_settings['restart-key']){
-        generate_solarsystem();
-    }
-};
-
-window.onkeyup = function(e){
-    var key = String.fromCharCode(e.keyCode || e.which);
-
-    if(key === settings_settings['movement-keys'][1]){
-        key_left = false;
-
-    }else if(key === settings_settings['movement-keys'][3]){
-        key_right = false;
-
-    }else if(key === settings_settings['movement-keys'][2]){
-        key_down = false;
-
-    }else if(key === settings_settings['movement-keys'][0]){
-        key_up = false;
-    }
-};
-
 window.onload = function(){
     canvas_init();
     settings_init({
@@ -309,6 +266,49 @@ window.onload = function(){
     });
     generate_solarsystem();
 
+    window.onkeydown = function(e){
+        var key = String.fromCharCode(e.keyCode || e.which);
+
+        if(key === settings_settings['movement-keys'][1]){
+            key_left = true;
+
+        }else if(key === settings_settings['movement-keys'][3]){
+            key_right = true;
+
+        }else if(key === settings_settings['movement-keys'][2]){
+            key_down = true;
+
+        }else if(key === settings_settings['movement-keys'][0]){
+            key_up = true;
+
+        }else if(key === settings_settings['line-keys'][0]){
+            settings_settings['line-parent'] = !settings_settings['line-parent'];
+
+        }else if(key === settings_settings['line-keys'][1]){
+            settings_settings['line-orbit'] = !settings_settings['line-orbit'];
+
+        }else if(key === settings_settings['restart-key']){
+            generate_solarsystem();
+        }
+    };
+
+    window.onkeyup = function(e){
+        var key = String.fromCharCode(e.keyCode || e.which);
+
+        if(key === settings_settings['movement-keys'][1]){
+            key_left = false;
+
+        }else if(key === settings_settings['movement-keys'][3]){
+            key_right = false;
+
+        }else if(key === settings_settings['movement-keys'][2]){
+            key_down = false;
+
+        }else if(key === settings_settings['movement-keys'][0]){
+            key_up = false;
+        }
+    };
+
     if('onmousewheel' in window){
         window.onmousewheel = mouse_wheel;
 
@@ -319,28 +319,28 @@ window.onload = function(){
           false
         );
     }
-};
 
-window.onmousedown =
-  window.ontouchstart = function(e){
-    drag = true;
-    drag_x = e.pageX;
-    drag_y = e.pageY;
-};
+    window.onmousedown =
+      window.ontouchstart = function(e){
+        drag = true;
+        drag_x = e.pageX;
+        drag_y = e.pageY;
+    };
 
-window.onmousemove =
-  window.ontouchmove = function(e){
-    if(!drag){
-        return;
-    }
+    window.onmousemove =
+      window.ontouchmove = function(e){
+        if(!drag){
+            return;
+        }
 
-    camera_x -= (drag_x - e.pageX) / zoom;
-    camera_y -= (drag_y - e.pageY) / zoom;
-    drag_x = e.pageX;
-    drag_y = e.pageY;
-};
+        camera_x -= (drag_x - e.pageX) / zoom;
+        camera_y -= (drag_y - e.pageY) / zoom;
+        drag_x = e.pageX;
+        drag_y = e.pageY;
+    };
 
-window.onmouseup =
-  window.ontouchend = function(e){
-    drag = false;
+    window.onmouseup =
+      window.ontouchend = function(e){
+        drag = false;
+    };
 };
