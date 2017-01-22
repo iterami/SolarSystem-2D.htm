@@ -37,10 +37,10 @@ function draw_body(body){
     });
 
     // Draw orbit path and line to parent, if player allows it.
-    if(settings_settings['line-orbit']
-      || settings_settings['line-parent']){
+    if(storage_data['line-orbit']
+      || storage_data['line-parent']){
         var vertices = [];
-        if(settings_settings['line-orbit']){
+        if(storage_data['line-orbit']){
             vertices.push({
               'endAngle': math_tau,
               'radius': body['orbit'],
@@ -50,7 +50,7 @@ function draw_body(body){
               'y': offset_y,
             });
         }
-        if(settings_settings['line-parent']){
+        if(storage_data['line-parent']){
             vertices.push({
               'type': 'moveTo',
               'x': body['x'],
@@ -113,12 +113,12 @@ function draw_logic(){
     // Draw the star.
     canvas_draw_path({
       'properties': {
-        'fillStyle': settings_settings['solar-color'],
+        'fillStyle': storage_data['solar-color'],
       },
       'vertices': [
         {
           'endAngle': math_tau,
-          'radius': settings_settings['solar-radius'],
+          'radius': storage_data['solar-radius'],
           'startAngle': 0,
           'type': 'arc',
           'x': 0,
@@ -200,8 +200,8 @@ function generate_solarsystem(){
         }while(moonloop_counter--);
     }while(bodyloop_counter--);
 
-    settings_settings['solar-color'] = random_hex();
-    settings_settings['solar-radius'] = random_integer({
+    storage_data['solar-color'] = random_hex();
+    storage_data['solar-radius'] = random_integer({
       'max': 99,
     }) + 5;
 }
@@ -209,16 +209,16 @@ function generate_solarsystem(){
 function logic(){
     // Update camera position.
     if(key_down){
-        camera_y -= settings_settings['camera-speed'] / zoom;
+        camera_y -= storage_data['camera-speed'] / zoom;
     }
     if(key_left){
-        camera_x += settings_settings['camera-speed'] / zoom;
+        camera_x += storage_data['camera-speed'] / zoom;
     }
     if(key_right){
-        camera_x -= settings_settings['camera-speed'] / zoom;
+        camera_x -= storage_data['camera-speed'] / zoom;
     }
     if(key_up){
-        camera_y += settings_settings['camera-speed'] / zoom;
+        camera_y += storage_data['camera-speed'] / zoom;
     }
 }
 
@@ -251,9 +251,8 @@ var zoom = 1;
 
 window.onload = function(){
     canvas_init();
-    settings_init({
-      'prefix': 'SolarSystem-2D.htm-',
-      'settings': {
+    storage_init({
+      'data': {
         'camera-speed': 10,
         'line-keys': 'LO',
         'line-orbit': true,
@@ -263,31 +262,32 @@ window.onload = function(){
         'solar-color': '#fff',
         'solar-radius': 1,
       },
+      'prefix': 'SolarSystem-2D.htm-',
     });
     generate_solarsystem();
 
     window.onkeydown = function(e){
         var key = String.fromCharCode(e.keyCode || e.which);
 
-        if(key === settings_settings['movement-keys'][1]){
+        if(key === storage_data['movement-keys'][1]){
             key_left = true;
 
-        }else if(key === settings_settings['movement-keys'][3]){
+        }else if(key === storage_data['movement-keys'][3]){
             key_right = true;
 
-        }else if(key === settings_settings['movement-keys'][2]){
+        }else if(key === storage_data['movement-keys'][2]){
             key_down = true;
 
-        }else if(key === settings_settings['movement-keys'][0]){
+        }else if(key === storage_data['movement-keys'][0]){
             key_up = true;
 
-        }else if(key === settings_settings['line-keys'][0]){
-            settings_settings['line-parent'] = !settings_settings['line-parent'];
+        }else if(key === storage_data['line-keys'][0]){
+            storage_data['line-parent'] = !storage_data['line-parent'];
 
-        }else if(key === settings_settings['line-keys'][1]){
-            settings_settings['line-orbit'] = !settings_settings['line-orbit'];
+        }else if(key === storage_data['line-keys'][1]){
+            storage_data['line-orbit'] = !storage_data['line-orbit'];
 
-        }else if(key === settings_settings['restart-key']){
+        }else if(key === storage_data['restart-key']){
             generate_solarsystem();
         }
     };
@@ -295,16 +295,16 @@ window.onload = function(){
     window.onkeyup = function(e){
         var key = String.fromCharCode(e.keyCode || e.which);
 
-        if(key === settings_settings['movement-keys'][1]){
+        if(key === storage_data['movement-keys'][1]){
             key_left = false;
 
-        }else if(key === settings_settings['movement-keys'][3]){
+        }else if(key === storage_data['movement-keys'][3]){
             key_right = false;
 
-        }else if(key === settings_settings['movement-keys'][2]){
+        }else if(key === storage_data['movement-keys'][2]){
             key_down = false;
 
-        }else if(key === settings_settings['movement-keys'][0]){
+        }else if(key === storage_data['movement-keys'][0]){
             key_up = false;
         }
     };
