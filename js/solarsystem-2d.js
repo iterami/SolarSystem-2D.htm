@@ -185,9 +185,7 @@ function generate_solarsystem(){
             // Create moon for this new body.
             bodies[bodies.length - 1]['moons'].push({
               'color': random_hex(),
-              'orbit': random_integer({
-                'max': 100,
-              }) + 15,
+              'orbit': random_integer() + 15,
               'parent': bodyloop_counter,
               'radius': radius,
               'rotation': random_integer({
