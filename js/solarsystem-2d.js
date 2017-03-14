@@ -154,7 +154,7 @@ function generate_solarsystem(){
 
         // Create body.
         bodies.push({
-          'color': random_hex(),
+          'color': '#' + random_hex(),
           'orbit': random_integer({
             'max': 2323,
           }) + 232,
@@ -184,7 +184,7 @@ function generate_solarsystem(){
 
             // Create moon for this new body.
             bodies[bodies.length - 1]['moons'].push({
-              'color': random_hex(),
+              'color': '#'+ random_hex(),
               'orbit': random_integer() + 15,
               'parent': bodyloop_counter,
               'radius': radius,
@@ -198,7 +198,7 @@ function generate_solarsystem(){
         }while(moonloop_counter--);
     }while(bodyloop_counter--);
 
-    storage_data['solar-color'] = random_hex();
+    storage_data['solar-color'] = '#'+ random_hex();
     storage_data['solar-radius'] = random_integer({
       'max': 99,
     }) + 5;
