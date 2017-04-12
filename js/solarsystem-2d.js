@@ -72,16 +72,13 @@ function draw_body(body){
         });
     }
 
-    // If no moons, we're done here.
-    if(body['moons'] == void 0){
-        return;
-    }
-
     // Draw moons.
-    var moonloop_counter = body['moons'].length - 1;
-    do{
-        draw_body(body['moons'][moonloop_counter]);
-    }while(moonloop_counter--);
+    if(body['moons']){
+        var moonloop_counter = body['moons'].length - 1;
+        do{
+            draw_body(body['moons'][moonloop_counter]);
+        }while(moonloop_counter--);
+    }
 }
 
 function draw_logic(){
@@ -145,10 +142,8 @@ function generate_solarsystem(){
     var bodyloop_counter = random_integer({
       'max': 5,
     }) + 1;
-    var moonloop_counter = 0;
-    var radius = 0;
     do{
-        radius = random_integer({
+        var radius = random_integer({
           'max': 10,
         }) + 3;
 
@@ -169,33 +164,31 @@ function generate_solarsystem(){
 
         // Should this new body have moons?
         if(random_boolean()){
-            continue;
+            bodies[bodies.length - 1]['moons'] = [];
+
+            var moonloop_counter = random_integer({
+              'max': 2,
+            }) + 1;
+            do{
+                radius = random_integer({
+                  'max': 5,
+                }) + 2;
+
+                // Create moon for this new body.
+                bodies[bodies.length - 1]['moons'].push({
+                  'color': '#'+ random_hex(),
+                  'orbit': random_integer() + 15,
+                  'parent': bodyloop_counter,
+                  'radius': radius,
+                  'rotation': random_integer({
+                    'max': 360,
+                  }),
+                  'speed': (Math.random() - .5) / 5,
+                  'x': 0,
+                  'y': 0,
+                });
+            }while(moonloop_counter--);
         }
-
-        bodies[bodies.length - 1]['moons'] = [];
-
-        moonloop_counter = random_integer({
-          'max': 2,
-        }) + 1;
-        do{
-            radius = random_integer({
-              'max': 5,
-            }) + 2;
-
-            // Create moon for this new body.
-            bodies[bodies.length - 1]['moons'].push({
-              'color': '#'+ random_hex(),
-              'orbit': random_integer() + 15,
-              'parent': bodyloop_counter,
-              'radius': radius,
-              'rotation': random_integer({
-                'max': 360,
-              }),
-              'speed': (Math.random() - .5) / 5,
-              'x': 0,
-              'y': 0,
-            });
-        }while(moonloop_counter--);
     }while(bodyloop_counter--);
 
     storage_data['solar-color'] = '#'+ random_hex();
