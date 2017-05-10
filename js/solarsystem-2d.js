@@ -139,22 +139,22 @@ function draw_logic(){
 function generate_solarsystem(){
     bodies.length = 0;
 
-    var bodyloop_counter = random_integer({
+    var bodyloop_counter = core_random_integer({
       'max': 5,
     }) + 1;
     do{
-        var radius = random_integer({
+        var radius = core_random_integer({
           'max': 10,
         }) + 3;
 
         // Create body.
         bodies.push({
-          'color': '#' + random_hex(),
-          'orbit': random_integer({
+          'color': '#' + core_random_hex(),
+          'orbit': core_random_integer({
             'max': 2323,
           }) + 232,
           'radius': radius,
-          'rotation': random_integer({
+          'rotation': core_random_integer({
             'max': 360,
           }),
           'speed': Math.random() / 100,
@@ -163,24 +163,24 @@ function generate_solarsystem(){
         });
 
         // Should this new body have moons?
-        if(random_boolean()){
+        if(core_random_boolean()){
             bodies[bodies.length - 1]['moons'] = [];
 
-            var moonloop_counter = random_integer({
+            var moonloop_counter = core_random_integer({
               'max': 2,
             }) + 1;
             do{
-                radius = random_integer({
+                radius = core_random_integer({
                   'max': 5,
                 }) + 2;
 
                 // Create moon for this new body.
                 bodies[bodies.length - 1]['moons'].push({
-                  'color': '#'+ random_hex(),
-                  'orbit': random_integer() + 15,
+                  'color': '#'+ core_random_hex(),
+                  'orbit': core_random_integer() + 15,
                   'parent': bodyloop_counter,
                   'radius': radius,
-                  'rotation': random_integer({
+                  'rotation': core_random_integer({
                     'max': 360,
                   }),
                   'speed': (Math.random() - .5) / 5,
@@ -191,8 +191,8 @@ function generate_solarsystem(){
         }
     }while(bodyloop_counter--);
 
-    storage_data['solar-color'] = '#'+ random_hex();
-    storage_data['solar-radius'] = random_integer({
+    storage_data['solar-color'] = '#'+ core_random_hex();
+    storage_data['solar-radius'] = core_random_integer({
       'max': 99,
     }) + 5;
 }
