@@ -37,10 +37,10 @@ function draw_body(body){
     });
 
     // Draw orbit path and line to parent, if player allows it.
-    if(storage_data['line-orbit']
-      || storage_data['line-parent']){
+    if(core_storage_data['line-orbit']
+      || core_storage_data['line-parent']){
         var vertices = [];
-        if(storage_data['line-orbit']){
+        if(core_storage_data['line-orbit']){
             vertices.push({
               'endAngle': math_tau,
               'radius': body['orbit'],
@@ -50,7 +50,7 @@ function draw_body(body){
               'y': offset_y,
             });
         }
-        if(storage_data['line-parent']){
+        if(core_storage_data['line-parent']){
             vertices.push({
               'type': 'moveTo',
               'x': body['x'],
@@ -110,12 +110,12 @@ function draw_logic(){
     // Draw the star.
     canvas_draw_path({
       'properties': {
-        'fillStyle': storage_data['solar-color'],
+        'fillStyle': core_storage_data['solar-color'],
       },
       'vertices': [
         {
           'endAngle': math_tau,
-          'radius': storage_data['solar-radius'],
+          'radius': core_storage_data['solar-radius'],
           'startAngle': 0,
           'type': 'arc',
           'x': 0,
@@ -191,8 +191,8 @@ function generate_solarsystem(){
         }
     }while(bodyloop_counter--);
 
-    storage_data['solar-color'] = '#'+ core_random_hex();
-    storage_data['solar-radius'] = core_random_integer({
+    core_storage_data['solar-color'] = '#'+ core_random_hex();
+    core_storage_data['solar-radius'] = core_random_integer({
       'max': 99,
     }) + 5;
 }
@@ -200,16 +200,16 @@ function generate_solarsystem(){
 function logic(){
     // Update camera position.
     if(key_down){
-        camera_y -= storage_data['camera-speed'] / zoom;
+        camera_y -= core_storage_data['camera-speed'] / zoom;
     }
     if(key_left){
-        camera_x += storage_data['camera-speed'] / zoom;
+        camera_x += core_storage_data['camera-speed'] / zoom;
     }
     if(key_right){
-        camera_x -= storage_data['camera-speed'] / zoom;
+        camera_x -= core_storage_data['camera-speed'] / zoom;
     }
     if(key_up){
-        camera_y += storage_data['camera-speed'] / zoom;
+        camera_y += core_storage_data['camera-speed'] / zoom;
     }
 }
 
@@ -242,7 +242,7 @@ var zoom = 1;
 
 window.onload = function(){
     canvas_init();
-    storage_init({
+    core_storage_init({
       'data': {
         'camera-speed': 10,
         'line-keys': 'LO',
@@ -260,25 +260,25 @@ window.onload = function(){
     window.onkeydown = function(e){
         var key = String.fromCharCode(e.keyCode || e.which);
 
-        if(key === storage_data['movement-keys'][1]){
+        if(key === core_storage_data['movement-keys'][1]){
             key_left = true;
 
-        }else if(key === storage_data['movement-keys'][3]){
+        }else if(key === core_storage_data['movement-keys'][3]){
             key_right = true;
 
-        }else if(key === storage_data['movement-keys'][2]){
+        }else if(key === core_storage_data['movement-keys'][2]){
             key_down = true;
 
-        }else if(key === storage_data['movement-keys'][0]){
+        }else if(key === core_storage_data['movement-keys'][0]){
             key_up = true;
 
-        }else if(key === storage_data['line-keys'][0]){
-            storage_data['line-parent'] = !storage_data['line-parent'];
+        }else if(key === core_storage_data['line-keys'][0]){
+            core_storage_data['line-parent'] = !core_storage_data['line-parent'];
 
-        }else if(key === storage_data['line-keys'][1]){
-            storage_data['line-orbit'] = !storage_data['line-orbit'];
+        }else if(key === core_storage_data['line-keys'][1]){
+            core_storage_data['line-orbit'] = !core_storage_data['line-orbit'];
 
-        }else if(key === storage_data['restart-key']){
+        }else if(key === core_storage_data['restart-key']){
             generate_solarsystem();
         }
     };
@@ -286,16 +286,16 @@ window.onload = function(){
     window.onkeyup = function(e){
         var key = String.fromCharCode(e.keyCode || e.which);
 
-        if(key === storage_data['movement-keys'][1]){
+        if(key === core_storage_data['movement-keys'][1]){
             key_left = false;
 
-        }else if(key === storage_data['movement-keys'][3]){
+        }else if(key === core_storage_data['movement-keys'][3]){
             key_right = false;
 
-        }else if(key === storage_data['movement-keys'][2]){
+        }else if(key === core_storage_data['movement-keys'][2]){
             key_down = false;
 
-        }else if(key === storage_data['movement-keys'][0]){
+        }else if(key === core_storage_data['movement-keys'][0]){
             key_up = false;
         }
     };
