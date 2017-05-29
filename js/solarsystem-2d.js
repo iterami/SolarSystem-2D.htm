@@ -228,20 +228,7 @@ function mouse_wheel(e){
     zoom = parseFloat(zoom.toFixed(2));
 }
 
-var bodies = [];
-var camera_x = 0;
-var camera_y = 0;
-var drag = false;
-var drag_x = 0;
-var drag_y = 0;
-var key_down = false;
-var key_left = false;
-var key_right = false;
-var key_up = false;
-var zoom = 1;
-
-window.onload = function(){
-    canvas_init();
+function repo_init(){
     core_storage_init({
       'data': {
         'camera-speed': 10,
@@ -255,6 +242,7 @@ window.onload = function(){
       },
       'prefix': 'SolarSystem-2D.htm-',
     });
+    canvas_init();
     generate_solarsystem();
 
     window.onkeydown = function(e){
@@ -334,4 +322,16 @@ window.onload = function(){
       window.ontouchend = function(e){
         drag = false;
     };
-};
+}
+
+var bodies = [];
+var camera_x = 0;
+var camera_y = 0;
+var drag = false;
+var drag_x = 0;
+var drag_y = 0;
+var key_down = false;
+var key_left = false;
+var key_right = false;
+var key_up = false;
+var zoom = 1;
