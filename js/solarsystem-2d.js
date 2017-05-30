@@ -243,24 +243,23 @@ function repo_init(){
       'prefix': 'SolarSystem-2D.htm-',
     });
     var keybinds = {};
-    keybinds[core_storage_data['line-keys'].charCodeAt(0)] = {
+    keybinds[core_storage_data['line-keys'][0]] = {
       'todo': function(){
           core_storage_data['line-parent'] = !core_storage_data['line-parent'];
       },
     };
-    keybinds[core_storage_data['line-keys'][1].charCodeAt(0)] = {
+    keybinds[core_storage_data['line-keys'][1]] = {
       'todo': function(){
           core_storage_data['line-orbit'] = !core_storage_data['line-orbit'];
       },
     };
-    keybinds[core_storage_data['movement-keys'].charCodeAt(0)] = {};
-    keybinds[core_storage_data['movement-keys'].charCodeAt(1)] = {};
-    keybinds[core_storage_data['movement-keys'].charCodeAt(2)] = {};
-    keybinds[core_storage_data['movement-keys'].charCodeAt(3)] = {};
-    keybinds[core_storage_data['restart-key'].charCodeAt(0)] = {
+    keybinds[core_storage_data['movement-keys'][0]] = {};
+    keybinds[core_storage_data['movement-keys'][1]] = {};
+    keybinds[core_storage_data['movement-keys'][2]] = {};
+    keybinds[core_storage_data['movement-keys'][3]] = {};
+    keybinds[core_storage_data['restart-key']] = {
       'todo': generate_solarsystem,
     };
-    console.log(keybinds);
     core_input_binds_add({
       'keybinds': keybinds,
       'mousebinds': {
