@@ -199,16 +199,16 @@ function generate_solarsystem(){
 
 function logic(){
     // Update camera position.
-    if(key_down){
+    if(core_input_keys[core_storage_data['movement-keys'][2].charCodeAt(0)]['state']){
         camera_y -= core_storage_data['camera-speed'] / zoom;
     }
-    if(key_left){
+    if(core_input_keys[core_storage_data['movement-keys'][1].charCodeAt(0)]['state']){
         camera_x += core_storage_data['camera-speed'] / zoom;
     }
-    if(key_right){
+    if(core_input_keys[core_storage_data['movement-keys'][3].charCodeAt(0)]['state']){
         camera_x -= core_storage_data['camera-speed'] / zoom;
     }
-    if(key_up){
+    if(core_input_keys[core_storage_data['movement-keys'][0].charCodeAt(0)]['state']){
         camera_y += core_storage_data['camera-speed'] / zoom;
     }
 }
@@ -242,96 +242,53 @@ function repo_init(){
       },
       'prefix': 'SolarSystem-2D.htm-',
     });
+    var keybinds = {};
+    keybinds[core_storage_data['line-keys'].charCodeAt(0)] = {
+      'todo': function(){
+          core_storage_data['line-parent'] = !core_storage_data['line-parent'];
+      },
+    };
+    keybinds[core_storage_data['line-keys'][1].charCodeAt(0)] = {
+      'todo': function(){
+          core_storage_data['line-orbit'] = !core_storage_data['line-orbit'];
+      },
+    };
+    keybinds[core_storage_data['movement-keys'].charCodeAt(0)] = {};
+    keybinds[core_storage_data['movement-keys'].charCodeAt(1)] = {};
+    keybinds[core_storage_data['movement-keys'].charCodeAt(2)] = {};
+    keybinds[core_storage_data['movement-keys'].charCodeAt(3)] = {};
+    keybinds[core_storage_data['restart-key'].charCodeAt(0)] = {
+      'todo': generate_solarsystem,
+    };
+    console.log(keybinds);
+    core_input_binds_add({
+      'keybinds': keybinds,
+      'mousebinds': {
+        'mousedown': {},
+        'mousemove': {},
+        'mousewheel': {
+          'todo': function(event){
+              zoom += (event.wheelDelta || -event.detail) > 0
+                ? .05
+                : -.05;
+
+              if(zoom < .1){
+                  zoom = .1;
+
+              }else if(zoom > 3){
+                  zoom = 3;
+              }
+
+              zoom = parseFloat(zoom.toFixed(2));
+          },
+        },
+      },
+    });
     canvas_init();
     generate_solarsystem();
-
-    window.onkeydown = function(e){
-        var key = String.fromCharCode(e.keyCode || e.which);
-
-        if(key === core_storage_data['movement-keys'][1]){
-            key_left = true;
-
-        }else if(key === core_storage_data['movement-keys'][3]){
-            key_right = true;
-
-        }else if(key === core_storage_data['movement-keys'][2]){
-            key_down = true;
-
-        }else if(key === core_storage_data['movement-keys'][0]){
-            key_up = true;
-
-        }else if(key === core_storage_data['line-keys'][0]){
-            core_storage_data['line-parent'] = !core_storage_data['line-parent'];
-
-        }else if(key === core_storage_data['line-keys'][1]){
-            core_storage_data['line-orbit'] = !core_storage_data['line-orbit'];
-
-        }else if(key === core_storage_data['restart-key']){
-            generate_solarsystem();
-        }
-    };
-
-    window.onkeyup = function(e){
-        var key = String.fromCharCode(e.keyCode || e.which);
-
-        if(key === core_storage_data['movement-keys'][1]){
-            key_left = false;
-
-        }else if(key === core_storage_data['movement-keys'][3]){
-            key_right = false;
-
-        }else if(key === core_storage_data['movement-keys'][2]){
-            key_down = false;
-
-        }else if(key === core_storage_data['movement-keys'][0]){
-            key_up = false;
-        }
-    };
-
-    if('onmousewheel' in window){
-        window.onmousewheel = mouse_wheel;
-
-    }else{
-        document.addEventListener(
-          'DOMMouseScroll',
-          mouse_wheel,
-          false
-        );
-    }
-
-    window.onmousedown =
-      window.ontouchstart = function(e){
-        drag = true;
-        drag_x = e.pageX;
-        drag_y = e.pageY;
-    };
-
-    window.onmousemove =
-      window.ontouchmove = function(e){
-        if(!drag){
-            return;
-        }
-
-        camera_x -= (drag_x - e.pageX) / zoom;
-        camera_y -= (drag_y - e.pageY) / zoom;
-        drag_x = e.pageX;
-        drag_y = e.pageY;
-    };
-
-    window.onmouseup =
-      window.ontouchend = function(e){
-        drag = false;
-    };
 }
 
 var bodies = [];
 var camera_x = 0;
 var camera_y = 0;
-var drag = false;
-var drag_x = 0;
-var drag_y = 0;
-var key_down = false;
-var key_left = false;
-var key_right = false;
-var key_up = false;
 var zoom = 1;
