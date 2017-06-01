@@ -199,16 +199,16 @@ function generate_solarsystem(){
 
 function logic(){
     // Update camera position.
-    if(core_input_keys[core_storage_data['movement-keys'][2].charCodeAt(0)]['state']){
+    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(2)]['state']){
         camera_y -= core_storage_data['camera-speed'] / zoom;
     }
-    if(core_input_keys[core_storage_data['movement-keys'][1].charCodeAt(0)]['state']){
+    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(1)]['state']){
         camera_x += core_storage_data['camera-speed'] / zoom;
     }
-    if(core_input_keys[core_storage_data['movement-keys'][3].charCodeAt(0)]['state']){
+    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(3)]['state']){
         camera_x -= core_storage_data['camera-speed'] / zoom;
     }
-    if(core_input_keys[core_storage_data['movement-keys'][0].charCodeAt(0)]['state']){
+    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(0)]['state']){
         camera_y += core_storage_data['camera-speed'] / zoom;
     }
 }
