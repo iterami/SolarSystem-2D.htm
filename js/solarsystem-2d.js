@@ -199,16 +199,16 @@ function generate_solarsystem(){
 
 function logic(){
     // Update camera position.
-    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(2)]['state']){
+    if(core_keys[core_storage_data['movement-keys'].charCodeAt(2)]['state']){
         camera_y -= core_storage_data['camera-speed'] / zoom;
     }
-    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(1)]['state']){
+    if(core_keys[core_storage_data['movement-keys'].charCodeAt(1)]['state']){
         camera_x += core_storage_data['camera-speed'] / zoom;
     }
-    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(3)]['state']){
+    if(core_keys[core_storage_data['movement-keys'].charCodeAt(3)]['state']){
         camera_x -= core_storage_data['camera-speed'] / zoom;
     }
-    if(core_input_keys[core_storage_data['movement-keys'].charCodeAt(0)]['state']){
+    if(core_keys[core_storage_data['movement-keys'].charCodeAt(0)]['state']){
         camera_y += core_storage_data['camera-speed'] / zoom;
     }
 }
@@ -260,7 +260,7 @@ function repo_init(){
     keybinds[core_storage_data['restart-key']] = {
       'todo': generate_solarsystem,
     };
-    core_input_binds_add({
+    core_events_bind({
       'keybinds': keybinds,
       'mousebinds': {
         'mousedown': {},
