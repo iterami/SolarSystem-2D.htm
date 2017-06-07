@@ -229,8 +229,8 @@ function mouse_wheel(e){
 }
 
 function repo_init(){
-    core_storage_init({
-      'data': {
+    core_repo_init({
+      'storage': {
         'camera-speed': 10,
         'line-keys': 'LO',
         'line-orbit': true,
@@ -240,7 +240,7 @@ function repo_init(){
         'solar-color': '#fff',
         'solar-radius': 1,
       },
-      'prefix': 'SolarSystem-2D.htm-',
+      'title': 'SolarSystem-2D.htm',
     });
     var keybinds = {};
     keybinds[core_storage_data['line-keys'][0]] = {
