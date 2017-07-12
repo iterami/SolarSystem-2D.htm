@@ -110,8 +110,6 @@ function draw_logic(){
           'radius': solar_radius,
           'startAngle': 0,
           'type': 'arc',
-          'x': 0,
-          'y': 0,
         },
       ],
     });
