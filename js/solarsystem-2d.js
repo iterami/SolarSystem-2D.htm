@@ -43,14 +43,6 @@ function draw_logic(){
 
     // Restore the buffer state.
     canvas_buffer.restore();
-
-    // Draw zoom.
-    canvas_buffer.fillStyle = '#fff';
-    canvas_buffer.fillText(
-      zoom,
-      0,
-      25
-    );
 }
 
 function logic(){
@@ -67,6 +59,12 @@ function logic(){
     if(core_keys[87]['state']){
         camera_y += 10 / zoom;
     }
+
+    core_ui_update({
+      'ids': {
+        'zoom': zoom,
+      },
+    });
 }
 
 function repo_init(){
@@ -99,6 +97,7 @@ function repo_init(){
         },
       },
       'title': 'SolarSystem-2D.htm',
+      'ui': 'Zoom: <span id=ui-zoom></span>',
     });
     canvas_init();
 }
