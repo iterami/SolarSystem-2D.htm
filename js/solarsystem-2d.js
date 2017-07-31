@@ -26,21 +26,6 @@ function draw_logic(){
         }while(loop_counter--);
     }
 
-    // Draw the star.
-    canvas_draw_path({
-      'properties': {
-        'fillStyle': solar_color,
-      },
-      'vertices': [
-        {
-          'endAngle': math_tau,
-          'radius': solar_radius,
-          'startAngle': 0,
-          'type': 'arc',
-        },
-      ],
-    });
-
     // Restore the buffer state.
     canvas_buffer.restore();
 }
@@ -105,6 +90,4 @@ function repo_init(){
 var bodies = [];
 var camera_x = 0;
 var camera_y = 0;
-var solar_color = '';
-var solar_radius = 0;
 var zoom = 1;

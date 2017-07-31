@@ -75,10 +75,19 @@ function draw_body(body){
 
 function load_data(){
     bodies.length = 0;
-    solar_color = '#' + core_random_hex();
-    solar_radius = core_random_integer({
-      'max': 99,
-    }) + 5;
+
+    // Create star.
+    bodies.push({
+      'color': '#' + core_random_hex(),
+      'orbit': 0,
+      'radius': core_random_integer({
+        'max': 99,
+      }) + 5,
+      'rotation': 0,
+      'speed': 0,
+      'x': 0,
+      'y': 0,
+    });
 
     var bodyloop_counter = core_random_integer({
       'max': 5,
