@@ -54,7 +54,16 @@ function logic(){
 
 function repo_init(){
     core_repo_init({
-      'info': '<input onclick="canvas_setmode();core_escape()" type=button value="Generate SolarSystem">',
+      'info': '<input id=generate type=button value="Generate SolarSystem">',
+      'info-events': {
+        'generate': {
+          'todo': function(){
+              canvas_setmode();
+              core_escape();
+          },
+          'type': 'onclick',
+        },
+      },
       'keybinds': {
         65: {},
         68: {},
