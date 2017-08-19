@@ -61,7 +61,6 @@ function repo_init(){
               canvas_setmode();
               core_escape();
           },
-          'type': 'onclick',
         },
       },
       'keybinds': {
