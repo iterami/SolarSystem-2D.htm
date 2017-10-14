@@ -6,8 +6,8 @@ function draw_logic(){
 
     // Setup camera offset.
     canvas_buffer.translate(
-      canvas_x,
-      canvas_y
+      canvas_properties['width-half'],
+      canvas_properties['height-half']
     );
     canvas_buffer.scale(
       zoom,
