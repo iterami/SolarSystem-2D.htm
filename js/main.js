@@ -54,6 +54,12 @@ function logic(){
 
 function repo_init(){
     core_repo_init({
+      'globals': {
+        'bodies': [],
+        'camera_x': 0,
+        'camera_y': 0,
+        'zoom': 1,
+      },
       'info': '<input id=generate type=button value="Generate SolarSystem">',
       'info-events': {
         'generate': {

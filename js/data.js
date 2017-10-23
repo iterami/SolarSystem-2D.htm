@@ -137,8 +137,3 @@ function load_data(){
         }
     }while(bodyloop_counter--);
 }
-
-var bodies = [];
-var camera_x = 0;
-var camera_y = 0;
-var zoom = 1;
