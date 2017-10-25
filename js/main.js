@@ -54,6 +54,14 @@ function logic(){
 
 function repo_init(){
     core_repo_init({
+      'events': {
+        'generate': {
+          'onclick': function(){
+              canvas_setmode();
+              core_escape();
+          },
+        },
+      },
       'globals': {
         'bodies': [],
         'camera_x': 0,
@@ -61,14 +69,6 @@ function repo_init(){
         'zoom': 1,
       },
       'info': '<input id=generate type=button value="Generate SolarSystem">',
-      'info-events': {
-        'generate': {
-          'todo': function(){
-              canvas_setmode();
-              core_escape();
-          },
-        },
-      },
       'keybinds': {
         65: {},
         68: {},
