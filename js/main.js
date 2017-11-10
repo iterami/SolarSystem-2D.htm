@@ -32,16 +32,16 @@ function draw_logic(){
 
 function logic(){
     // Update camera position.
-    if(core_keys[65]['state']){
+    if(core_keys[core_storage_data['move-←']]['state']){
         camera_x += 10 / zoom;
     }
-    if(core_keys[68]['state']){
+    if(core_keys[core_storage_data['move-→']]['state']){
         camera_x -= 10 / zoom;
     }
-    if(core_keys[83]['state']){
+    if(core_keys[core_storage_data['move-↓']]['state']){
         camera_y -= 10 / zoom;
     }
-    if(core_keys[87]['state']){
+    if(core_keys[core_storage_data['move-↑']]['state']){
         camera_y += 10 / zoom;
     }
 
@@ -69,12 +69,6 @@ function repo_init(){
         'zoom': 1,
       },
       'info': '<input id=generate type=button value="Generate SolarSystem">',
-      'keybinds': {
-        65: {},
-        68: {},
-        83: {},
-        87: {},
-      },
       'mousebinds': {
         'mousedown': {},
         'mousemove': {},
