@@ -26,7 +26,7 @@ function draw_body(body){
       },
       'vertices': [
         {
-          'endAngle': math_tau,
+          'endAngle': core_tau,
           'radius': body['radius'],
           'startAngle': 0,
           'type': 'arc',
@@ -45,7 +45,7 @@ function draw_body(body){
       'style': 'stroke',
       'vertices': [
         {
-          'endAngle': math_tau,
+          'endAngle': core_tau,
           'radius': body['orbit'],
           'startAngle': 0,
           'type': 'arc',
