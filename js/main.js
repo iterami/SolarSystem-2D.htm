@@ -85,7 +85,7 @@ function repo_init(){
                   zoom = 3;
               }
 
-              zoom = parseFloat(zoom.toFixed(2));
+              zoom = Number.parseFloat(zoom.toFixed(2));
           },
         },
       },
