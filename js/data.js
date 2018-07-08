@@ -2,8 +2,8 @@
 
 function draw_body(body){
     // Calculate offset.
-    var offset_x = 0;
-    var offset_y = 0;
+    let offset_x = 0;
+    let offset_y = 0;
     if(body['parent'] !== void 0){
         offset_x += bodies[body['parent']]['x'];
         offset_y += bodies[body['parent']]['y'];
@@ -66,7 +66,7 @@ function draw_body(body){
 
     // Draw moons.
     if(body['moons']){
-        var moonloop_counter = body['moons'].length - 1;
+        let moonloop_counter = body['moons'].length - 1;
         do{
             draw_body(body['moons'][moonloop_counter]);
         }while(moonloop_counter--);
@@ -89,7 +89,7 @@ function load_data(){
       'y': 0,
     });
 
-    var bodyloop_counter = core_random_integer({
+    let bodyloop_counter = core_random_integer({
       'max': 5,
     }) + 1;
     do{
@@ -114,7 +114,7 @@ function load_data(){
         if(core_random_boolean()){
             bodies[bodies.length - 1]['moons'] = [];
 
-            var moonloop_counter = core_random_integer({
+            let moonloop_counter = core_random_integer({
               'max': 2,
             }) + 1;
             do{

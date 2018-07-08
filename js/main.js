@@ -19,7 +19,7 @@ function draw_logic(){
     );
 
     // Draw bodies.
-    var loop_counter = bodies.length - 1;
+    let loop_counter = bodies.length - 1;
     if(loop_counter >= 0){
         do{
             draw_body(bodies[loop_counter]);
