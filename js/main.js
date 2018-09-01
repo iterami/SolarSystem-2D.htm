@@ -90,7 +90,7 @@ function repo_init(){
         },
       },
       'title': 'SolarSystem-2D.htm',
-      'ui': 'Zoom: <span id=ui-zoom></span>',
+      'ui': 'Zoom: <span id=zoom></span>',
     });
     canvas_init();
 }
