@@ -85,7 +85,10 @@ function repo_init(){
                   zoom = 3;
               }
 
-              zoom = Number.parseFloat(zoom.toFixed(2));
+              zoom = core_round({
+                'decimals': 2,
+                'number': zoom,
+              });
           },
         },
       },
