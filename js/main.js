@@ -56,10 +56,7 @@ function repo_init(){
     core_repo_init({
       'events': {
         'generate': {
-          'onclick': function(){
-              canvas_setmode();
-              core_escape();
-          },
+          'onclick': core_repo_reset,
         },
       },
       'globals': {
@@ -92,6 +89,7 @@ function repo_init(){
           },
         },
       },
+      'reset': canvas_setmode,
       'title': 'SolarSystem-2D.htm',
       'ui': 'Zoom: <span id=zoom></span>',
     });
