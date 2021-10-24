@@ -1,6 +1,6 @@
 'use strict';
 
-function draw_logic(){
+function repo_drawlogic(){
     // Save the current buffer state.
     canvas_buffer.save();
 
@@ -30,7 +30,7 @@ function draw_logic(){
     canvas_buffer.restore();
 }
 
-function logic(){
+function repo_logic(){
     // Update camera position.
     if(core_keys[core_storage_data['move-←']]['state']){
         camera_x += 10 / zoom;
