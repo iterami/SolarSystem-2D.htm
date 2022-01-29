@@ -1,10 +1,7 @@
 'use strict';
 
 function repo_drawlogic(){
-    // Save the current buffer state.
     canvas_buffer.save();
-
-    // Setup camera offset.
     canvas_buffer.translate(
       canvas_properties['width-half'],
       canvas_properties['height-half']
@@ -18,7 +15,6 @@ function repo_drawlogic(){
       camera_y
     );
 
-    // Draw bodies.
     let loop_counter = bodies.length - 1;
     if(loop_counter >= 0){
         do{
@@ -26,12 +22,10 @@ function repo_drawlogic(){
         }while(loop_counter--);
     }
 
-    // Restore the buffer state.
     canvas_buffer.restore();
 }
 
 function repo_logic(){
-    // Update camera position.
     if(core_keys[core_storage_data['move-←']]['state']){
         camera_x += 10 / zoom;
     }

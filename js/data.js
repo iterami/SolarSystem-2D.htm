@@ -1,7 +1,6 @@
 'use strict';
 
 function draw_body(body){
-    // Calculate offset.
     let offset_x = 0;
     let offset_y = 0;
     if(body['parent'] !== void 0){
@@ -9,7 +8,6 @@ function draw_body(body){
         offset_y += bodies[body['parent']]['y'];
     }
 
-    // Bodies orbit around their parent.
     body['rotation'] += body['speed'];
     if(body['rotation'] > 360){
         body['rotation'] -= 360;
@@ -19,7 +17,6 @@ function draw_body(body){
     body['x'] = body['orbit'] * Math.cos(body['rotation']) + offset_x;
     body['y'] = body['orbit'] * Math.sin(body['rotation']) + offset_y;
 
-    // Draw body.
     canvas_draw_path({
       'properties': {
         'fillStyle': body['color'],
@@ -36,7 +33,6 @@ function draw_body(body){
       ],
     });
 
-    // Draw orbit path and line to parent, if player allows it.
     canvas_draw_path({
       'properties': {
         'strokeStyle': body['color'],
@@ -64,7 +60,6 @@ function draw_body(body){
       ],
     });
 
-    // Draw moons.
     if(body['moons']){
         let moonloop_counter = body['moons'].length - 1;
         do{
@@ -76,7 +71,6 @@ function draw_body(body){
 function load_data(){
     bodies.length = 0;
 
-    // Create star.
     bodies.push({
       'color': '#' + core_random_hex(),
       'orbit': 0,
@@ -93,7 +87,6 @@ function load_data(){
       'max': 5,
     }) + 1;
     do{
-        // Create body.
         bodies.push({
           'color': '#' + core_random_hex(),
           'orbit': core_random_integer({
@@ -110,7 +103,6 @@ function load_data(){
           'y': 0,
         });
 
-        // Should this new body have moons?
         if(core_random_boolean()){
             bodies[bodies.length - 1]['moons'] = [];
 
@@ -118,7 +110,6 @@ function load_data(){
               'max': 2,
             }) + 1;
             do{
-                // Create moon for this new body.
                 bodies[bodies.length - 1]['moons'].push({
                   'color': '#'+ core_random_hex(),
                   'orbit': core_random_integer() + 15,
