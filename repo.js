@@ -130,16 +130,16 @@ function load_data(){
 }
 
 function repo_drawlogic(){
-    canvas_buffer.save();
-    canvas_buffer.translate(
+    canvas.save();
+    canvas.translate(
       canvas_properties['width-half'],
       canvas_properties['height-half']
     );
-    canvas_buffer.scale(
+    canvas.scale(
       zoom,
       zoom
     );
-    canvas_buffer.translate(
+    canvas.translate(
       camera_x,
       camera_y
     );
@@ -151,7 +151,7 @@ function repo_drawlogic(){
         }while(loop_counter--);
     }
 
-    canvas_buffer.restore();
+    canvas.restore();
 }
 
 function repo_logic(){
