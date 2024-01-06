@@ -155,6 +155,10 @@ function repo_drawlogic(){
 }
 
 function repo_logic(){
+    if(core_mouse['down-0']){
+        camera_x += core_mouse['movement-x'] / zoom;
+        camera_y += core_mouse['movement-y'] / zoom;
+    }
     if(core_keys[core_storage_data['move-←']]['state']){
         camera_x += 10 / zoom;
     }
