@@ -192,7 +192,7 @@ function repo_init(){
         'camera_y': 0,
         'zoom': 1,
       },
-      'info': '<input id=generate type=button value="Generate SolarSystem">',
+      'info': '<button id=generate type=button>Generate SolarSystem</button>',
       'mousebinds': {
         'mousedown': {},
         'mousemove': {},
