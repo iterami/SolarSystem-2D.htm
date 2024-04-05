@@ -23,7 +23,7 @@ function draw_body(body){
       },
       'vertices': [
         {
-          'endAngle': math_tau,
+          'endAngle': 6.283185307179586,
           'radius': body['radius'],
           'startAngle': 0,
           'type': 'arc',
@@ -41,7 +41,7 @@ function draw_body(body){
       'style': 'stroke',
       'vertices': [
         {
-          'endAngle': math_tau,
+          'endAngle': 6.283185307179586,
           'radius': body['orbit'],
           'startAngle': 0,
           'type': 'arc',
@@ -207,12 +207,13 @@ function repo_init(){
 
               }else if(zoom > 3){
                   zoom = 3;
-              }
 
-              zoom = core_round({
-                'decimals': 2,
-                'number': zoom,
-              });
+              }else{
+                  zoom = core_round({
+                    'decimals': 2,
+                    'number': zoom,
+                  });
+              }
           },
         },
       },
