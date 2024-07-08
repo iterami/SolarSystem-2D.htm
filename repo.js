@@ -22,14 +22,14 @@ function draw_body(body){
         'fillStyle': body['color'],
       },
       'vertices': [
-        {
-          'endAngle': 6.283185307179586,
-          'radius': body['radius'],
-          'startAngle': 0,
-          'type': 'arc',
-          'x': body['x'],
-          'y': body['y'],
-        },
+        [
+          'arc',
+          body['x'],
+          body['y'],
+          body['radius'],
+          0,
+          6.283185307179586,
+        ],
       ],
     });
 
@@ -40,23 +40,24 @@ function draw_body(body){
       },
       'style': 'stroke',
       'vertices': [
-        {
-          'endAngle': 6.283185307179586,
-          'radius': body['orbit'],
-          'startAngle': 0,
-          'type': 'arc',
-          'x': offset_x,
-          'y': offset_y,
-        },
-        {
-          'type': 'moveTo',
-          'x': body['x'],
-         'y': body['y'],
-        },
-        {
-          'x': offset_x,
-          'y': offset_y,
-        },
+        [
+          'arc',
+          offset_x,
+          offset_y,
+          body['orbit'],
+          0,
+          6.283185307179586,
+        ],
+        [
+          'moveTo',
+          body['x'],
+         body['y'],
+        ],
+        [
+          'lineTo',
+          offset_x,
+          offset_y,
+        ],
       ],
     });
 
