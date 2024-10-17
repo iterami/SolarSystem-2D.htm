@@ -197,7 +197,7 @@ function repo_init(){
       'mousebinds': {
         'mousedown': {},
         'mousemove': {},
-        'mousewheel': {
+        'wheel': {
           'todo': function(event){
               zoom += (event.wheelDelta || -event.detail) > 0
                 ? .05
