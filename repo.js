@@ -70,7 +70,7 @@ function draw_body(body){
 }
 
 function load_data(){
-    bodies.length = 0;
+    core_object_reset(bodies);
 
     bodies.push({
       'color': '#' + core_random_hex(),
