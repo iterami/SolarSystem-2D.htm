@@ -156,9 +156,9 @@ function repo_drawlogic(){
 }
 
 function repo_logic(){
-    if(core_mouse['down-0']){
-        camera_x += core_mouse['movement-x'] / zoom;
-        camera_y += core_mouse['movement-y'] / zoom;
+    if(core_pointer['down-0']){
+        camera_x += core_pointer['movement-x'] / zoom;
+        camera_y += core_pointer['movement-y'] / zoom;
     }
     if(core_keys[core_storage_data['move-←']]['state']){
         camera_x += 10 / zoom;
@@ -194,9 +194,7 @@ function repo_init(){
         'zoom': 1,
       },
       'info': '<button id=generate type=button>Generate SolarSystem</button>',
-      'mousebinds': {
-        'mousedown': {},
-        'mousemove': {},
+      'pointerbinds': {
         'wheel': {
           'todo': function(event){
               zoom += (event.wheelDelta || -event.detail) > 0
