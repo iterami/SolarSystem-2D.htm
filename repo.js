@@ -70,6 +70,7 @@ function draw_body(body){
 }
 
 function load_data(){
+    reset_camera();
     core_object_reset(bodies);
 
     bodies.push({
@@ -155,36 +156,17 @@ function repo_drawlogic(){
     canvas.restore();
 }
 
-function repo_logic(){
-    if(core_pointer['down-0']){
-        camera_x += core_pointer['movement-x'] / zoom;
-        camera_y += core_pointer['movement-y'] / zoom;
-    }
-    if(core_keys[core_storage_data['move-←']]['state']){
-        camera_x += 10 / zoom;
-    }
-    if(core_keys[core_storage_data['move-→']]['state']){
-        camera_x -= 10 / zoom;
-    }
-    if(core_keys[core_storage_data['move-↓']]['state']){
-        camera_y -= 10 / zoom;
-    }
-    if(core_keys[core_storage_data['move-↑']]['state']){
-        camera_y += 10 / zoom;
-    }
-
-    core_ui_update({
-      'ids': {
-        'zoom': zoom,
-      },
-    });
-}
-
 function repo_init(){
     core_repo_init({
       'events': {
         'generate': {
           'onclick': canvas_setmode,
+        },
+        'reset-camera': {
+          'onclick': function(){
+              reset_camera();
+              core_escape();
+          },
         },
       },
       'globals': {
@@ -193,7 +175,7 @@ function repo_init(){
         'camera_y': 0,
         'zoom': 1,
       },
-      'info': '<button id=generate type=button>Generate SolarSystem</button>',
+      'info': '<button id=generate type=button>Generate SolarSystem</button><button id=reset-camera type=button>Reset Camera</button>',
       'pointerbinds': {
         'wheel': {
           'todo': function(event){
@@ -221,4 +203,34 @@ function repo_init(){
       'ui': 'Zoom: <span id=zoom></span>',
     });
     canvas_init();
+}
+
+function repo_logic(){
+    if(core_pointer['down-0']){
+        camera_x += core_pointer['movement-x'] / zoom;
+        camera_y += core_pointer['movement-y'] / zoom;
+    }
+    if(core_keys[core_storage_data['move-←']]['state']){
+        camera_x += 10 / zoom;
+    }
+    if(core_keys[core_storage_data['move-→']]['state']){
+        camera_x -= 10 / zoom;
+    }
+    if(core_keys[core_storage_data['move-↓']]['state']){
+        camera_y -= 10 / zoom;
+    }
+    if(core_keys[core_storage_data['move-↑']]['state']){
+        camera_y += 10 / zoom;
+    }
+
+    core_ui_update({
+      'ids': {
+        'zoom': zoom,
+      },
+    });
+}
+
+function reset_camera(){
+    camera_x = 0;
+    camera_y = 0;
 }
