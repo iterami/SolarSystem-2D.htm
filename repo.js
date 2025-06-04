@@ -142,8 +142,8 @@ function repo_drawlogic(){
       zoom
     );
     canvas.translate(
-      camera_x,
-      camera_y
+      -camera_x,
+      -camera_y
     );
 
     let loop_counter = bodies.length - 1;
@@ -209,20 +209,20 @@ function repo_init(){
 
 function repo_logic(){
     if(core_pointer['down-0']){
-        camera_x += core_pointer['movement-x'] / zoom;
-        camera_y += core_pointer['movement-y'] / zoom;
+        camera_x -= core_pointer['movement-x'] / zoom;
+        camera_y -= core_pointer['movement-y'] / zoom;
     }
     if(core_keys[core_storage_data['move-←']]['state']){
-        camera_x += 10 / zoom;
-    }
-    if(core_keys[core_storage_data['move-→']]['state']){
         camera_x -= 10 / zoom;
     }
+    if(core_keys[core_storage_data['move-→']]['state']){
+        camera_x += 10 / zoom;
+    }
     if(core_keys[core_storage_data['move-↓']]['state']){
-        camera_y -= 10 / zoom;
+        camera_y += 10 / zoom;
     }
     if(core_keys[core_storage_data['move-↑']]['state']){
-        camera_y += 10 / zoom;
+        camera_y -= 10 / zoom;
     }
 
     core_ui_update({
