@@ -76,30 +76,20 @@ function load_data(){
     bodies.push({
       'color': '#' + core_random_hex(),
       'orbit': 0,
-      'radius': core_random_integer({
-        'max': 99,
-      }) + 5,
+      'radius': core_random_integer(99) + 5,
       'rotation': 0,
       'speed': 0,
       'x': 0,
       'y': 0,
     });
 
-    let bodyloop_counter = core_random_integer({
-      'max': 5,
-    }) + 1;
+    let bodyloop_counter = core_random_integer(5) + 1;
     do{
         bodies.push({
           'color': '#' + core_random_hex(),
-          'orbit': core_random_integer({
-            'max': 2323,
-          }) + 232,
-          'radius': core_random_integer({
-            'max': 10,
-          }) + 3,
-          'rotation': core_random_integer({
-            'max': 360,
-          }),
+          'orbit': core_random_integer(2323) + 232,
+          'radius': core_random_integer(10) + 3,
+          'rotation': core_random_integer(360),
           'speed': Math.random() / 100,
           'x': 0,
           'y': 0,
@@ -108,20 +98,14 @@ function load_data(){
         if(core_random_boolean()){
             bodies[bodies.length - 1]['moons'] = [];
 
-            let moonloop_counter = core_random_integer({
-              'max': 2,
-            }) + 1;
+            let moonloop_counter = core_random_integer(2) + 1;
             do{
                 bodies[bodies.length - 1]['moons'].push({
                   'color': '#'+ core_random_hex(),
-                  'orbit': core_random_integer() + 15,
+                  'orbit': core_random_integer(100) + 15,
                   'parent': bodyloop_counter,
-                  'radius': core_random_integer({
-                    'max': 5,
-                  }) + 2,
-                  'rotation': core_random_integer({
-                    'max': 360,
-                  }),
+                  'radius': core_random_integer(5) + 2,
+                  'rotation': core_random_integer(360),
                   'speed': (Math.random() - .5) / 5,
                   'x': 0,
                   'y': 0,
