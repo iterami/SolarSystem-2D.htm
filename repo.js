@@ -3,30 +3,30 @@
 function draw_body(body){
     let offset_x = 0;
     let offset_y = 0;
-    if(body['parent'] !== void 0){
-        offset_x += bodies[body['parent']]['x'];
-        offset_y += bodies[body['parent']]['y'];
+    if(body.parent !== void 0){
+        offset_x += bodies[body.parent].x;
+        offset_y += bodies[body.parent].y;
     }
 
-    body['rotation'] += body['speed'];
-    if(body['rotation'] > 360){
-        body['rotation'] -= 360;
-    }else if(body['rotation'] < 0){
-        body['rotation'] += 360;
+    body.rotation += body.speed;
+    if(body.rotation > 360){
+        body.rotation -= 360;
+    }else if(body.rotation < 0){
+        body.rotation += 360;
     }
-    body['x'] = body['orbit'] * Math.cos(body['rotation']) + offset_x;
-    body['y'] = body['orbit'] * Math.sin(body['rotation']) + offset_y;
+    body.x = body.orbit * Math.cos(body.rotation) + offset_x;
+    body.y = body.orbit * Math.sin(body.rotation) + offset_y;
 
     canvas_draw_path({
       'properties': {
-        'fillStyle': body['color'],
+        'fillStyle': body.color,
       },
       'vertices': [
         [
           'arc',
-          body['x'],
-          body['y'],
-          body['radius'],
+          body.x,
+          body.y,
+          body.radius,
           0,
           6.283185307179586,
         ],
@@ -35,8 +35,8 @@ function draw_body(body){
 
     canvas_draw_path({
       'properties': {
-        'strokeStyle': body['color'],
-        'lineWidth': Math.ceil(body['radius'] / 10) / zoom,
+        'strokeStyle': body.color,
+        'lineWidth': Math.ceil(body.radius / 10) / zoom,
       },
       'style': 'stroke',
       'vertices': [
@@ -44,14 +44,14 @@ function draw_body(body){
           'arc',
           offset_x,
           offset_y,
-          body['orbit'],
+          body.orbit,
           0,
           6.283185307179586,
         ],
         [
           'moveTo',
-          body['x'],
-         body['y'],
+          body.x,
+         body.y,
         ],
         [
           'lineTo',
@@ -61,10 +61,10 @@ function draw_body(body){
       ],
     });
 
-    if(body['moons']){
-        let moonloop_counter = body['moons'].length - 1;
+    if(body.moons){
+        let moonloop_counter = body.moons.length - 1;
         do{
-            draw_body(body['moons'][moonloop_counter]);
+            draw_body(body.moons[moonloop_counter]);
         }while(moonloop_counter--);
     }
 }
@@ -96,11 +96,11 @@ function load_data(){
         });
 
         if(core_random_boolean()){
-            bodies[bodies.length - 1]['moons'] = [];
+            bodies[bodies.length - 1].moons = [];
 
             let moonloop_counter = core_random_integer(2) + 1;
             do{
-                bodies[bodies.length - 1]['moons'].push({
+                bodies[bodies.length - 1].moons.push({
                   'color': '#'+ core_random_hex(),
                   'orbit': core_random_integer(100) + 15,
                   'parent': bodyloop_counter,
@@ -118,8 +118,8 @@ function load_data(){
 function repo_drawlogic(){
     canvas.save();
     canvas.translate(
-      canvas_properties['width-half'],
-      canvas_properties['height-half']
+      canvas_properties.width_half,
+      canvas_properties.height_half
     );
     canvas.scale(
       zoom,
@@ -196,16 +196,16 @@ function repo_logic(){
         camera_x -= core_pointer['movement-x'] / zoom;
         camera_y -= core_pointer['movement-y'] / zoom;
     }
-    if(core_keys[core_storage_data['move-←']]['state']){
+    if(core_keys[core_storage_data['move-←']].state){
         camera_x -= 10 / zoom;
     }
-    if(core_keys[core_storage_data['move-→']]['state']){
+    if(core_keys[core_storage_data['move-→']].state){
         camera_x += 10 / zoom;
     }
-    if(core_keys[core_storage_data['move-↓']]['state']){
+    if(core_keys[core_storage_data['move-↓']].state){
         camera_y += 10 / zoom;
     }
-    if(core_keys[core_storage_data['move-↑']]['state']){
+    if(core_keys[core_storage_data['move-↑']].state){
         camera_y -= 10 / zoom;
     }
 
