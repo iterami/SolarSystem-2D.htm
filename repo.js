@@ -182,7 +182,7 @@ function repo_init(){
           },
         },
       },
-      'storage-controls': true,
+      'storage_controls': true,
       'title': 'SolarSystem-2D.htm',
       'ui': 'Zoom: <span id=zoom></span>',
     });
