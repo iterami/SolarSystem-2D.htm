@@ -192,9 +192,9 @@ function repo_init(){
 }
 
 function repo_logic(){
-    if(core_pointer['down-0']){
-        camera_x -= core_pointer['movement-x'] / zoom;
-        camera_y -= core_pointer['movement-y'] / zoom;
+    if(core_pointer.down_0){
+        camera_x -= core_pointer.movement_x / zoom;
+        camera_y -= core_pointer.movement_y / zoom;
     }
     if(core_keys[core_storage_data['move-←']].state){
         camera_x -= 10 / zoom;
