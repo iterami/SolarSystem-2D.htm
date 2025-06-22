@@ -196,16 +196,16 @@ function repo_logic(){
         camera_x -= core_pointer.movement_x / zoom;
         camera_y -= core_pointer.movement_y / zoom;
     }
-    if(core_keys[core_storage_data['move-←']].state){
-        camera_x -= 10 / zoom;
-    }
-    if(core_keys[core_storage_data['move-→']].state){
-        camera_x += 10 / zoom;
-    }
-    if(core_keys[core_storage_data['move-↓']].state){
+    if(core_keys[core_storage_data.move_down].state){
         camera_y += 10 / zoom;
     }
-    if(core_keys[core_storage_data['move-↑']].state){
+    if(core_keys[core_storage_data.move_left].state){
+        camera_x -= 10 / zoom;
+    }
+    if(core_keys[core_storage_data.move_right].state){
+        camera_x += 10 / zoom;
+    }
+    if(core_keys[core_storage_data.move_up].state){
         camera_y -= 10 / zoom;
     }
 
