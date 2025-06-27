@@ -161,6 +161,14 @@ function repo_init(){
       },
       'info': '<button id=generate type=button>Generate SolarSystem</button><button id=reset-camera type=button>Reset Camera</button>',
       'pointerbinds': {
+        'pointermove': {
+          'todo': function(){
+              if(core_pointer.down_0){
+                  camera_x -= core_pointer.movement_x / zoom;
+                  camera_y -= core_pointer.movement_y / zoom;
+              }
+          },
+        },
         'wheel': {
           'todo': function(event){
               zoom += (event.wheelDelta || -event.detail) > 0
@@ -192,10 +200,6 @@ function repo_init(){
 }
 
 function repo_logic(){
-    if(core_pointer.down_0){
-        camera_x -= core_pointer.movement_x / zoom;
-        camera_y -= core_pointer.movement_y / zoom;
-    }
     if(core_keys[core_storage_data.move_down].state){
         camera_y += 10 / zoom;
     }
