@@ -69,52 +69,6 @@ function draw_body(body){
     }
 }
 
-function load_data(){
-    reset_camera();
-    core_object_reset(bodies);
-
-    bodies.push({
-      'color': '#' + core_random_hex(),
-      'orbit': 0,
-      'radius': core_random_integer(99) + 5,
-      'rotation': 0,
-      'speed': 0,
-      'x': 0,
-      'y': 0,
-    });
-
-    let bodyloop_counter = core_random_integer(5) + 1;
-    do{
-        bodies.push({
-          'color': '#' + core_random_hex(),
-          'orbit': core_random_integer(2323) + 232,
-          'radius': core_random_integer(10) + 3,
-          'rotation': core_random_integer(360),
-          'speed': Math.random() / 100,
-          'x': 0,
-          'y': 0,
-        });
-
-        if(core_random_boolean()){
-            bodies[bodies.length - 1].moons = [];
-
-            let moonloop_counter = core_random_integer(2) + 1;
-            do{
-                bodies[bodies.length - 1].moons.push({
-                  'color': '#'+ core_random_hex(),
-                  'orbit': core_random_integer(100) + 15,
-                  'parent': bodyloop_counter,
-                  'radius': core_random_integer(5) + 2,
-                  'rotation': core_random_integer(360),
-                  'speed': (Math.random() - .5) / 5,
-                  'x': 0,
-                  'y': 0,
-                });
-            }while(moonloop_counter--);
-        }
-    }while(bodyloop_counter--);
-}
-
 function repo_drawlogic(){
     canvas.save();
     canvas.translate(
@@ -197,6 +151,52 @@ function repo_init(){
     canvas_init({
       'cursor': 'pointer',
     });
+}
+
+function repo_load(){
+    reset_camera();
+    core_object_reset(bodies);
+
+    bodies.push({
+      'color': '#' + core_random_hex(),
+      'orbit': 0,
+      'radius': core_random_integer(99) + 5,
+      'rotation': 0,
+      'speed': 0,
+      'x': 0,
+      'y': 0,
+    });
+
+    let bodyloop_counter = core_random_integer(5) + 1;
+    do{
+        bodies.push({
+          'color': '#' + core_random_hex(),
+          'orbit': core_random_integer(2323) + 232,
+          'radius': core_random_integer(10) + 3,
+          'rotation': core_random_integer(360),
+          'speed': Math.random() / 100,
+          'x': 0,
+          'y': 0,
+        });
+
+        if(core_random_boolean()){
+            bodies[bodies.length - 1].moons = [];
+
+            let moonloop_counter = core_random_integer(2) + 1;
+            do{
+                bodies[bodies.length - 1].moons.push({
+                  'color': '#'+ core_random_hex(),
+                  'orbit': core_random_integer(100) + 15,
+                  'parent': bodyloop_counter,
+                  'radius': core_random_integer(5) + 2,
+                  'rotation': core_random_integer(360),
+                  'speed': (Math.random() - .5) / 5,
+                  'x': 0,
+                  'y': 0,
+                });
+            }while(moonloop_counter--);
+        }
+    }while(bodyloop_counter--);
 }
 
 function repo_logic(){
