@@ -113,7 +113,7 @@ function repo_init(){
         'camera_y': 0,
         'zoom': 1,
       },
-      'info': '<button id=generate type=button>Generate SolarSystem</button><button id=reset_camera type=button>Reset Camera</button>',
+      'info': '<button class=medium id=generate type=button>Generate SolarSystem</button><button id=reset_camera type=button>Reset Camera</button>',
       'pointerbinds': {
         'pointermove': {
           'todo': function(){
