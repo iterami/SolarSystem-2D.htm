@@ -62,10 +62,9 @@ function draw_body(body){
     });
 
     if(body.moons){
-        let moonloop_counter = body.moons.length - 1;
-        do{
-            draw_body(body.moons[moonloop_counter]);
-        }while(moonloop_counter--);
+        for(let i = 0; i < body.moons.length; i++){
+            draw_body(body.moons[i]);
+        }
     }
 }
 
@@ -84,11 +83,8 @@ function repo_drawlogic(){
       -camera_y
     );
 
-    let loop_counter = bodies.length - 1;
-    if(loop_counter >= 0){
-        do{
-            draw_body(bodies[loop_counter]);
-        }while(loop_counter--);
+    for(let i = 0; i < bodies.length; i++){
+        draw_body(bodies[i]);
     }
 
     canvas.restore();
@@ -167,8 +163,8 @@ function repo_load(){
       'y': 0,
     });
 
-    let bodyloop_counter = core_random_integer(5) + 1;
-    do{
+    const bodycount = core_random_integer(5) + 1;
+    for(let i = 0; i < bodycount; i++){
         bodies.push({
           'color': '#' + core_random_hex(),
           'orbit': core_random_integer(2323) + 232,
@@ -182,21 +178,21 @@ function repo_load(){
         if(core_random_boolean()){
             bodies[bodies.length - 1].moons = [];
 
-            let moonloop_counter = core_random_integer(2) + 1;
-            do{
+            const mooncount = core_random_integer(2) + 1;
+            for(let j = 0; j < mooncount; j++){
                 bodies[bodies.length - 1].moons.push({
-                  'color': '#'+ core_random_hex(),
+                  'color': '#' + core_random_hex(),
                   'orbit': core_random_integer(100) + 15,
-                  'parent': bodyloop_counter,
+                  'parent': i,
                   'radius': core_random_integer(5) + 2,
                   'rotation': core_random_integer(360),
                   'speed': (Math.random() - .5) / 5,
                   'x': 0,
                   'y': 0,
                 });
-            }while(moonloop_counter--);
+            }
         }
-    }while(bodyloop_counter--);
+    }
 }
 
 function repo_logic(){
