@@ -99,7 +99,7 @@ function repo_init(){
         'reset_camera': {
           'onclick': function(){
               reset_camera();
-              core_escape();
+              core_escape(false);
           },
         },
       },
