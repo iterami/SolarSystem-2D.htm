@@ -8,14 +8,15 @@ function draw_body(body){
         offset_y += bodies[body.parent].y;
     }
 
-    body.rotation += body.speed;
-    if(body.rotation > 360){
-        body.rotation -= 360;
-    }else if(body.rotation < 0){
-        body.rotation += 360;
+    body.period += body.speed;
+    if(body.period >= 360){
+        body.period -= 360;
+
+    }else if(body.period < 0){
+        body.period += 360;
     }
-    body.x = body.orbit * Math.cos(body.rotation) + offset_x;
-    body.y = body.orbit * Math.sin(body.rotation) + offset_y;
+    body.x = body.orbit * Math.cos(body.period) + offset_x;
+    body.y = body.orbit * Math.sin(body.period) + offset_y;
 
     canvas_draw_path({
       'properties': {
@@ -35,8 +36,8 @@ function draw_body(body){
 
     canvas_draw_path({
       'properties': {
-        'strokeStyle': body.color,
         'lineWidth': Math.ceil(body.radius / 10) / zoom,
+        'strokeStyle': body.color,
       },
       'style': 'stroke',
       'vertices': [
@@ -51,7 +52,7 @@ function draw_body(body){
         [
           'moveTo',
           body.x,
-         body.y,
+          body.y,
         ],
         [
           'lineTo',
@@ -62,8 +63,8 @@ function draw_body(body){
     });
 
     if(body.moons){
-        for(let i = 0; i < body.moons.length; i++){
-            draw_body(body.moons[i]);
+        for(const moon of body.moons){
+            draw_body(moon);
         }
     }
 }
@@ -83,8 +84,8 @@ function repo_drawlogic(){
       -camera_y
     );
 
-    for(let i = 0; i < bodies.length; i++){
-        draw_body(bodies[i]);
+    for(const body of bodies){
+        draw_body(body);
     }
 
     canvas.restore();
@@ -125,11 +126,11 @@ function repo_init(){
                 ? .05
                 : -.05;
 
-              if(zoom < .1){
-                  zoom = .1;
+              if(zoom < .05){
+                  zoom = .05;
 
-              }else if(zoom > 3){
-                  zoom = 3;
+              }else if(zoom > 5){
+                  zoom = 5;
 
               }else{
                   zoom = core_round({
@@ -137,12 +138,18 @@ function repo_init(){
                     'number': zoom,
                   });
               }
+
+              core_ui_update({
+                'ids': {
+                  'zoom': zoom,
+                },
+              });
           },
         },
       },
       'storage_controls': true,
       'title': 'SolarSystem-2D.htm',
-      'ui': ' Zoom: <span id=zoom></span>',
+      'ui': ' Zoom: <span id=zoom>1</span>',
     });
     canvas_init({
       'cursor': 'pointer',
@@ -156,8 +163,8 @@ function repo_load(){
     bodies.push({
       'color': '#' + core_random_hex(),
       'orbit': 0,
+      'period': 0,
       'radius': core_random_integer(99) + 5,
-      'rotation': 0,
       'speed': 0,
       'x': 0,
       'y': 0,
@@ -168,24 +175,25 @@ function repo_load(){
         bodies.push({
           'color': '#' + core_random_hex(),
           'orbit': core_random_integer(2323) + 232,
+          'period': core_random_integer(360),
           'radius': core_random_integer(10) + 3,
-          'rotation': core_random_integer(360),
           'speed': Math.random() / 100,
           'x': 0,
           'y': 0,
         });
 
         if(core_random_boolean()){
-            bodies[bodies.length - 1].moons = [];
+            const body = bodies[bodies.length - 1];
 
+            body.moons = [];
             const mooncount = core_random_integer(2) + 1;
             for(let j = 0; j < mooncount; j++){
-                bodies[bodies.length - 1].moons.push({
+                body.moons.push({
                   'color': '#' + core_random_hex(),
                   'orbit': core_random_integer(100) + 15,
                   'parent': i,
+                  'period': core_random_integer(360),
                   'radius': core_random_integer(5) + 2,
-                  'rotation': core_random_integer(360),
                   'speed': (Math.random() - .5) / 5,
                   'x': 0,
                   'y': 0,
@@ -208,15 +216,16 @@ function repo_logic(){
     if(core_keys[core_storage_data.move_up].state){
         camera_y -= 10 / zoom;
     }
+}
+
+function reset_camera(){
+    camera_x = 0;
+    camera_y = 0;
+    zoom = 1;
 
     core_ui_update({
       'ids': {
         'zoom': zoom,
       },
     });
-}
-
-function reset_camera(){
-    camera_x = 0;
-    camera_y = 0;
 }
