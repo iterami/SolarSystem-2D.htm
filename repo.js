@@ -112,39 +112,35 @@ function repo_init(){
       },
       'info': '<button class=medium id=generate type=button>Generate SolarSystem</button><button id=reset_camera type=button>Reset Camera</button>',
       'pointerbinds': {
-        'pointermove': {
-          'todo': function(){
-              if(core_pointer.down_0){
-                  camera_x -= core_pointer.movement_x / zoom;
-                  camera_y -= core_pointer.movement_y / zoom;
-              }
-          },
+        'pointermove': function(){
+            if(core_pointer.down_0){
+                camera_x -= core_pointer.movement_x / zoom;
+                camera_y -= core_pointer.movement_y / zoom;
+            }
         },
-        'wheel': {
-          'todo': function(event){
-              zoom += (event.wheelDelta || -event.detail) > 0
-                ? .05
-                : -.05;
+        'wheel': function(event){
+            zoom += (event.wheelDelta || -event.detail) > 0
+              ? .05
+              : -.05;
 
-              if(zoom < .05){
-                  zoom = .05;
+            if(zoom < .05){
+                zoom = .05;
 
-              }else if(zoom > 5){
-                  zoom = 5;
+            }else if(zoom > 5){
+                zoom = 5;
 
-              }else{
-                  zoom = core_round({
-                    'decimals': 2,
-                    'number': zoom,
-                  });
-              }
+            }else{
+                zoom = core_round({
+                  'decimals': 2,
+                  'number': zoom,
+                });
+            }
 
-              core_ui_update({
-                'ids': {
-                  'zoom': zoom,
-                },
-              });
-          },
+            core_ui_update({
+              'ids': {
+                'zoom': zoom,
+              },
+            });
         },
       },
       'storage_controls': true,
